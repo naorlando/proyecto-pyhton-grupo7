@@ -4,7 +4,7 @@ from django.shortcuts import render, HttpResponse
 
 
 def home(request):
-    return HttpResponse("Inicio")
+    return render(request,'index.html')
 
 def eventos(request):
     return HttpResponse("Eventos")
