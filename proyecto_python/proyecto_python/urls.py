@@ -19,7 +19,6 @@ from ProyectoWebApp import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',views.home,name='Inicio'),
-    path('eventos',views.eventos,name='Eventos'),
-    path('edicion',views.edicion,name='Edicion')
+    path('',views.home,name='Home'),
+    path('productos/',views.productos,name='Productos'),
 ]
