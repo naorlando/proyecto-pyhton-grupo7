@@ -55,7 +55,7 @@ ROOT_URLCONF = 'proyecto_python.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ["C:/Users/Nanon/Desktop/Python grupo 7/proyecto_python/proyecto_python/mytemplates"],
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
