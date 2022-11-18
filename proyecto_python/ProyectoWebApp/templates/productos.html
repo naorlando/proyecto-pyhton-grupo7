@@ -7,4 +7,14 @@
 
 <h1>productos</h1>
 
+<ul>
+    {% for producto in productos %}
+    <li>  
+        <h1>{{producto.1}}</h1>
+        <h2>{{producto.2}}</h2>
+
+    </li>
+    {% endfor %}
+</ul>
+
 {% endblock %}
