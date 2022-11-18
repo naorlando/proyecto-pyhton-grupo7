@@ -12,3 +12,9 @@ def productos(request):
     for user in info:
         print(user[1])
     return render(request,'productos.html',{'productos': info})
+
+def modificar_producto(request):
+    return render(request,'modificarproducto.html')
+
+def crear_producto(request):
+    return render(request,'crearproducto.html')
