@@ -7,14 +7,22 @@
 
 <h1>productos</h1>
 
-<ul>
-    {% for producto in productos %}
-    <li>  
-        <h1>{{producto.1}}</h1>
-        <h2>{{producto.2}}</h2>
+    <div class="row row-cols-1 row-cols-md-3 g-4 m-3">
 
-    </li>
+    {% for producto in productos %}
+    <div class="col">
+        <div class="col">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">{{producto.1}}</h5>
+                <p class="card-text">Precio: {{producto.2}}</p>
+                <a href="{% url 'ModificarProducto' producto.0 %}" class="btn btn-primary">Modificar</a>
+              </div>
+            </div>
+          </div>
+    </div>
     {% endfor %}
-</ul>
+    
+</div>
 
 {% endblock %}

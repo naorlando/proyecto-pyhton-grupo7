@@ -7,15 +7,21 @@
 
 <h1>modificar producto</h1>
 
-<form action="" method="POST">
+<form class="m-5" action="" method="POST">
     {% csrf_token %}
-    <label for="" class="form-label">Nombre</label>
-    <input type="text" class="form-contorl" name="nombre" value="{{ producto.1 }}" required>
-    <label for="" class="form-label">Precio</label>
-    <input type="number" class="form-control" name="precio" value="{{ producto.2 }}" required>
-    <label for="" class="form-label">Categoria</label>
-    <input type="number" class="form-control" name="categoria" value="{{ producto.3 }}" required>
-    <button type="submit">Modificar</button>
-</form>
+    <div class="mb-3">
+      <label for="" class="form-label">Nombre</label>
+      <input type="text" class="form-control" name="nombre" value="{{ producto.1 }}" required>
+    </div>
+    <div class="mb-3">
+      <label for="" class="form-label">Precio</label>
+      <input type="number" class="form-control" name="precio" value="{{ producto.2 }}" required>
+    </div>
+    <div class="mb-3">
+      <label for="" class="form-label">Categoria</label>
+      <input type="number" class="form-control" name="categoria" value="{{ producto.3 }}" required>
+    </div>
+    <button type="submit" class="btn btn-warning">Modificar</button>
+  </form>
 
 {% endblock %}
