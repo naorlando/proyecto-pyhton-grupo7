@@ -29,6 +29,37 @@ class Database():
             print(user[1])
         return users
 
+    def get_producto (self,id):
+        
+        query = "SELECT * FROM producto WHERE idproducto={}".format(id)
+
+        try:
+            self.cursor.execute(query)
+            prod = self.cursor.fetchone()
+
+            print("ID:",prod[0])
+            print("Nombre:",prod[1])
+            print("Precio:",prod[2])
+            print("Categoria:",prod[3])
+
+            return prod
+
+        except Exception as e:
+            print("El producto no existe")
+            raise
+
+    def update_producto (self, id, nombre_producto_m, precio_m, categoria_m):
+
+        query= "UPDATE producto SET nombre_producto = '{}', precio = {}, categoria = {} WHERE idproducto = {};".format(nombre_producto_m,precio_m,categoria_m,id)
+
+        try:
+            self.cursor.execute(query)
+            self.connection.commit()
+
+        except Exception as e:
+            print("Error al modificar el producto")
+            raise
+
 
 
     

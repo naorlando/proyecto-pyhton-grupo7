@@ -7,6 +7,15 @@
 
 <h1>modificar producto</h1>
 
-<p>Estoy en la branch modificar-producto</p>
+<form action="" method="POST">
+    {% csrf_token %}
+    <label for="" class="form-label">Nombre</label>
+    <input type="text" class="form-contorl" name="nombre" value="{{ producto.1 }}" required>
+    <label for="" class="form-label">Precio</label>
+    <input type="number" class="form-control" name="precio" value="{{ producto.2 }}" required>
+    <label for="" class="form-label">Categoria</label>
+    <input type="number" class="form-control" name="categoria" value="{{ producto.3 }}" required>
+    <button type="submit">Modificar</button>
+</form>
 
 {% endblock %}
