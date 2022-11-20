@@ -1,31 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
+
 <head>
+    {% load static %}
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/syles.css' %}">
 </head>
+
 <body>
-    <nav>
-        <ul>
-            <li>
-                <a href="/">Home</a>
-            </li>
-            <li>
-                <a href="/productos">Productos</a>
-            </li>
-            <li>
-                <a href="/productos/crear">Crear Productos</a>
-            </li>
-            <li>
-                <a href="/productos/modificar">Modificar Productos</a>
-            </li>
-        </ul> 
-    </nav>
+
+    {% include 'menu.html' %}
 
     {% block content %}
     {% endblock %}
-    
+
+    <script src="{% static 'bootstrap.min.js' %}"></script>
 </body>
+
 </html>
