@@ -1,5 +1,6 @@
 from django.db import models
 import pymysql
+import datetime as d
 
 # Create your models here.
 
@@ -10,7 +11,7 @@ class Database():
         self.connection = pymysql.connect(
         host='localhost',
         user='root',
-        password='',
+        password='01023',
         db='python-utn'
     ) 
     #chequeo que la bbdd este en funcionamiento, sino no se conecta
@@ -29,30 +30,45 @@ class Database():
             print(tarea[1])
         return tareas
 
-    def get_tarea (self,id):
-        query = "SELECT * FROM tareas WHERE idtarea = '{}'".format(id)
+    def get_tarea (self, ide):
+        query = "SELECT * FROM tareas WHERE idtarea = '{}'".format(ide)
 
         try:
             self.cursor.execute(query)
-            tarea = self.cursor.fetchone()
+            task = self.cursor.fetchone()
 
-            print("ID:",tarea[0])
-            print("Nombre:",tarea[1])
-            print("Prioidad:",tarea[2])
-            print("Descripcion:",tarea[3])
-            print("Fecha de inicio:", tarea[5])
-            print("Fecha de fin:", tarea[6])
+            print("ID:", task[0])
+            print("Nombre:", task[1])
+            print("Prioidad:", task[2])
+            print("Descripcion:", task[3])
+            print("Fecha de inicio:", task[4])
+            print("Fecha de fin:", task[5])
 
-            return tarea
+            return task
 
         except Exception as e:
             print("La tarea no existe")
             raise
 
-    def update_tarea(self, id, nombre_tarea_m, prioridad_m, descripcion_m, fecha_inicio_m, fecha_fin_m):
+    def get_tarea_x_prioridad(self, prioridad_m):
+        query = "SELECT * FROM tareas WHERE prioridad = '{}'".format(prioridad_m)
+        
+        try:
+            self.cursor.execute(query)
+            tasks = self.cursor.fetchall()
+            for task in tasks:
+                print("-----")
+                print("Nombre:", task[1])
+                print("Descripcion:", task[3])
+            return tasks
 
-        query = "UPDATE tareas SET nombre_tarea = '{}', prioridad = '{}', descripcion = '{}',fecha_inicio = '{}', \
-        fecha_fin = '{}' WHERE idtarea = '{}';".format(nombre_tarea_m, prioridad_m, descripcion_m, fecha_inicio_m, fecha_fin_m,id)
+        except Exception as e:
+            print("Error al obtener las tareas segun su prioridad")
+            raise
+
+    def update_tarea(self, ide, nombre_tarea_m, prioridad_m, descripcion_m, fecha_inicio_m, fecha_fin_m):
+        query = "UPDATE tareas SET nombre_tarea = '{}', prioridad = '{}', descripcion = '{}', fecha_inicio = '{}',\
+        fecha_fin = '{}' WHERE idtarea = '{}'".format(nombre_tarea_m, prioridad_m, descripcion_m, fecha_inicio_m, fecha_fin_m, ide)
 
         try:
             self.cursor.execute(query)
@@ -62,5 +78,32 @@ class Database():
             print("Error al modificar la tarea")
             raise
 
+    def create_tarea(self, nombre_tarea_m, prioridad_m, descripcion_m, fecha_inicio_m, fecha_fin_m):
+        query="INSERT INTO tareas(nombre_tarea, prioridad, descripcion, fecha_inicio, fecha_fin)\
+        VALUES ('{}','{}','{}','{}','{}')".format(nombre_tarea_m, prioridad_m, descripcion_m, fecha_inicio_m, fecha_fin_m)
+        
+        try:
+            self.cursor.execute(query)
+            self.connection.commit()
+        except Exception:
+            print("No se pudo agregar la tarea")
+            raise
+        
+    def delete_tarea(self, ide):
+        query = "DELETE FROM tareas WHERE idtarea = '{}'".format(ide)
+        try:
+            self.cursor.execute(query)
+            self.connection.commit()
+        except Exception:
+            print("No se pudo eliminar la tarea")
+            raise
+    
+    def close(self):
+        self.connection.close()
 
-
+f = d.datetime(2022, 11, 23, 16, 45) #23-11-2022 16:45
+db = Database()
+db.update_tarea(7, "tarea3", "baja", "descripcion 3", f, "2022-12-12")
+#db.get_tarea_x_prioridad("baja")
+db.get_tarea(5)
+db.close()
