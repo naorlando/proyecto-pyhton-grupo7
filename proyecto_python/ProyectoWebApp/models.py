@@ -19,45 +19,47 @@ class Database():
         print("La conexion fue exitosa")
     
     #METODOS
-    def all_users (self):
-        sql='SELECT * FROM producto'
+    def all_tareas (self):
+        query ='SELECT * FROM tareas'
 
-        self.cursor.execute(sql)
-        users=self.cursor.fetchall()
-        users=list(users)
-        for user in users:
-            print(user[1])
-        return users
+        self.cursor.execute(query)
+        tareas=self.cursor.fetchall()
+        tareas=list(tareas)
+        for tarea in tareas:
+            print(tarea[1])
+        return tareas
 
     def get_tarea (self,id):
-        
-        query = "SELECT * FROM producto WHERE idproducto={}".format(id)
+        query = "SELECT * FROM tareas WHERE idtarea = '{}'".format(id)
 
         try:
             self.cursor.execute(query)
-            prod = self.cursor.fetchone()
+            tarea = self.cursor.fetchone()
 
-            print("ID:",prod[0])
-            print("Nombre:",prod[1])
-            print("Precio:",prod[2])
-            print("Categoria:",prod[3])
+            print("ID:",tarea[0])
+            print("Nombre:",tarea[1])
+            print("Prioidad:",tarea[2])
+            print("Descripcion:",tarea[3])
+            print("Fecha de inicio:", tarea[5])
+            print("Fecha de fin:", tarea[6])
 
-            return prod
+            return tarea
 
         except Exception as e:
-            print("El producto no existe")
+            print("La tarea no existe")
             raise
 
-    def update_producto (self, id, nombre_producto_m, precio_m, categoria_m):
+    def update_tarea(self, id, nombre_tarea_m, prioridad_m, descripcion_m, fecha_inicio_m, fecha_fin_m):
 
-        query= "UPDATE producto SET nombre_producto = '{}', precio = {}, categoria = {} WHERE idproducto = {};".format(nombre_producto_m,precio_m,categoria_m,id)
+        query = "UPDATE tareas SET nombre_tarea = '{}', prioridad = '{}', descripcion = '{}',fecha_inicio = '{}', \
+        fecha_fin = '{}' WHERE idtarea = '{}';".format(nombre_tarea_m, prioridad_m, descripcion_m, fecha_inicio_m, fecha_fin_m,id)
 
         try:
             self.cursor.execute(query)
             self.connection.commit()
 
         except Exception as e:
-            print("Error al modificar el producto")
+            print("Error al modificar la tarea")
             raise
 
 
