@@ -8,7 +8,7 @@ def home(request):
 
 def tareas(request):
     db=Database()
-    info=db.all_users()
+    info=db.all_task()
     for user in info:
         print(user[1])
     return render(request,'tareas.html',{'tareas': info})
@@ -24,10 +24,10 @@ def modificar_tarea(request,id):
         descripcion_m = request.POST.get('descripcion')
         fecha_inicio_m = request.POST.get('fecha_inicio')
         fecha_fin_m = request.POST.get('fecha_fin')
-        db.update_producto(id,nombre_tarea_m,prioridad_m,descripcion_m,fecha_inicio_m,fecha_fin_m)
+        db.update_tarea(id,nombre_tarea_m,prioridad_m,descripcion_m,fecha_inicio_m,fecha_fin_m)
         return redirect('/')
 
-    return render(request,'modificarproducto.html',{'tarea': tarea})
+    return render(request,'modificartarea.html',{'tarea': tarea})
 
 def crear_tarea(request):
     return render(request,'creartarea.html')

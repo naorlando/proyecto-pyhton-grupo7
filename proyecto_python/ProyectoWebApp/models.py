@@ -50,14 +50,14 @@ class Database():
 
     def update_tarea (self, id,nombre_tarea_m,prioridad_m,descripcion_m,fecha_inicio_m,fecha_fin_m):
 
-        query= "UPDATE tareas SET nombre_tarea = '{}', prioridad = '{}',descripcion = '{}', fecha_inicio ={}, fecha_fin={}, WHERE idproducto = {};".format(nombre_tarea_m,prioridad_m,descripcion_m,fecha_inicio_m,fecha_fin_m,id)
+        query= "UPDATE tareas SET nombre_tarea = '{}', prioridad = '{}', descripcion = '{}', fecha_inicio ={}, fecha_fin={} WHERE idtarea = {};".format(nombre_tarea_m,prioridad_m,descripcion_m,fecha_inicio_m,fecha_fin_m,id)
 
         try:
             self.cursor.execute(query)
             self.connection.commit()
 
         except Exception as e:
-            print("Error al modificar el tarea")
+            print("Error al modificar la tarea")
             raise
 
 
