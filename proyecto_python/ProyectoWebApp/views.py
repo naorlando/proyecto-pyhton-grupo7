@@ -20,10 +20,11 @@ def modificar_tarea(request,id):
 
     if request.method == "POST":
         nombre_tarea_m = request.POST.get('nombre')
+        descripcion_m=request.POST.get('descripcion')
         fecha_inicio_m = request.POST.get('fecha_inicio')
         fecha_finalizacion_m = request.POST.get('fecha_finalizacion')
-        categoria_m = request.POST.get('categoria')
-        db.update_tarea(id,nombre_tarea_m,fecha_inicio_m,fecha_finalizacion_m,categoria_m)
+        prioridad_m = request.POST.get('prioridad')
+        db.update_tarea(id,nombre_tarea_m,descripcion_m,fecha_inicio_m,fecha_finalizacion_m,prioridad_m)
         return redirect('/')
 
     return render(request,'modificartarea.html',{'tarea': task})

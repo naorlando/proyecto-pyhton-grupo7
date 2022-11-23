@@ -20,7 +20,7 @@ class Database():
     
     #METODOS
     def all_users (self):
-        sql='SELECT * FROM producto'
+        sql='SELECT * FROM tarea'
 
         self.cursor.execute(sql)
         users=self.cursor.fetchall()
@@ -31,33 +31,33 @@ class Database():
 
     def get_tarea (self,id):
         
-        query = "SELECT * FROM producto WHERE idproducto={}".format(id)
+        query = "SELECT * FROM tarea WHERE idtarea={}".format(id)
 
         try:
             self.cursor.execute(query)
-            prod = self.cursor.fetchone()
+            task = self.cursor.fetchone()
 
-            print("ID:",prod[0])
-            print("Nombre:",prod[1])
-            print("Precio:",prod[2])
-            print("Categoria:",prod[3])
+            print("ID:",task[0])
+            print("Nombre:",task[1])
+            print("fechaini:",task[3])
+            print("prioridad:",task[5])
 
-            return prod
+            return task
 
         except Exception as e:
             print("El producto no existe")
             raise
 
-    def update_producto (self, id, nombre_producto_m, precio_m, categoria_m):
+    def update_producto (self, id,nombre_tarea_m,descripcion_m,fecha_inicio_m,fecha_finalizacion_m,prioridad_m):
 
-        query= "UPDATE producto SET nombre_producto = '{}', precio = {}, categoria = {} WHERE idproducto = {};".format(nombre_producto_m,precio_m,categoria_m,id)
+        query= "UPDATE producto SET nombre_tarea = '{}', descripcion = '{}', prioridad = '{}',fecha_inicio ={}, fecha_fin={}, WHERE idproducto = {};".format(nombre_tarea_m,descripcion_m,prioridad_m,fecha_inicio_m,fecha_finalizacion_m,id)
 
         try:
             self.cursor.execute(query)
             self.connection.commit()
 
         except Exception as e:
-            print("Error al modificar el producto")
+            print("Error al modificar el tarea")
             raise
 
 

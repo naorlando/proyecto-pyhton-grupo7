@@ -1,0 +1,31 @@
+{%extends 'base.html'%}
+
+{% block title %} Home {% endblock %}
+
+
+{% block content %}
+
+<h1>MODIFICAR TAREA</h1>
+
+<form class="m-5" action="" method="POST">
+    {% csrf_token %}
+    <div class="mb-3">
+      <label for="" class="form-label">Nombre</label>
+      <input type="text" class="form-control" name="nombre" value="{{ tarea.1 }}" required>
+    </div>
+    <div class="mb-3">
+      <label for="" class="form-label">Descripcion</label>
+      <input type="text" class="form-control" name="descripcion" value="{{ tarea.2 }}" required>
+    </div>
+    <div class="mb-3">
+      <label for="" class="form-label">Fecha finalizacion</label>
+      <input type="date" class="form-control" name="fecha_finalizacion" value="{{ producto.4 }}" required>
+    </div>
+    <div class="mb-3">
+      <label for="" class="form-label">Prioridad</label>
+      <input type="text" class="form-control" name="prioridad" value="{{ tarea.5 }}" required>
+    </div>
+    <button type="submit" class="btn btn-warning">Modificar</button>
+  </form>
+
+{% endblock %}
