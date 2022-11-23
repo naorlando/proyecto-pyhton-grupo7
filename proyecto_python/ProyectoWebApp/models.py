@@ -19,15 +19,15 @@ class Database():
         print("La conexion fue exitosa")
     
     #METODOS
-    def all_users (self):
+    def all_task(self):
         sql='SELECT * FROM tarea'
 
         self.cursor.execute(sql)
-        users=self.cursor.fetchall()
-        users=list(users)
-        for user in users:
-            print(user[1])
-        return users
+        tasks=self.cursor.fetchall()
+        tasks=list(tasks)
+        for task in tasks:
+            print(task[1])
+        return tasks
 
     def get_tarea (self,id):
         
