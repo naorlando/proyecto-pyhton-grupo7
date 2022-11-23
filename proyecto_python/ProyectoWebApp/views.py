@@ -6,26 +6,27 @@ from .models import Database
 def home(request):
     return render(request,'home.html')
 
-def productos(request):
+def tareas(request):
     db=Database()
-    info=db.all_users()
+    info=db.all_task()
     for user in info:
         print(user[1])
-    return render(request,'productos.html',{'productos': info})
+    return render(request,'tareas.html',{'tareas': info})
 
-def modificar_producto(request,id):
+def modificar_tarea(request,id):
     db=Database()
-    prod = db.get_producto(id)
+    task = db.get_tarea(id)
     # prod = Item.objects.get(idproducto = id)
 
     if request.method == "POST":
-        nombre_producto_m = request.POST.get('nombre')
-        precio_m = request.POST.get('precio')
+        nombre_tarea_m = request.POST.get('nombre')
+        fecha_inicio_m = request.POST.get('fecha_inicio')
+        fecha_finalizacion_m = request.POST.get('fecha_finalizacion')
         categoria_m = request.POST.get('categoria')
-        db.update_producto(id,nombre_producto_m,precio_m,categoria_m)
+        db.update_tarea(id,nombre_tarea_m,fecha_inicio_m,fecha_finalizacion_m,categoria_m)
         return redirect('/')
 
-    return render(request,'modificarproducto.html',{'producto': prod})
+    return render(request,'modificartarea.html',{'tarea': task})
 
-def crear_producto(request):
-    return render(request,'crearproducto.html')
+def crear_tarea(request):
+    return render(request,'creartarea.html')

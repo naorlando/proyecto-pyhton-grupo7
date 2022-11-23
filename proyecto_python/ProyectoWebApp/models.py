@@ -29,7 +29,7 @@ class Database():
             print(user[1])
         return users
 
-    def get_producto (self,id):
+    def get_tarea (self,id):
         
         query = "SELECT * FROM producto WHERE idproducto={}".format(id)
 
