@@ -20,7 +20,7 @@ class Database():
     
     #METODOS
     def all_task(self):
-        sql='SELECT * FROM tarea'
+        sql='SELECT * FROM tareas'
 
         self.cursor.execute(sql)
         tasks=self.cursor.fetchall()
@@ -31,26 +31,26 @@ class Database():
 
     def get_tarea (self,id):
         
-        query = "SELECT * FROM tarea WHERE idtarea={}".format(id)
+        query = "SELECT * FROM tareas WHERE idtarea={}".format(id)
 
         try:
             self.cursor.execute(query)
             task = self.cursor.fetchone()
 
-            print("ID:",task[0])
-            print("Nombre:",task[1])
-            print("fechaini:",task[3])
-            print("prioridad:",task[5])
+            # print("ID:",task[0])
+            # print("Nombre:",task[1])
+            # print("fechaini:",task[3])
+            # print("prioridad:",task[5])
 
             return task
 
         except Exception as e:
-            print("El producto no existe")
+            print("La tarea no existe")
             raise
 
-    def update_producto (self, id,nombre_tarea_m,descripcion_m,fecha_inicio_m,fecha_finalizacion_m,prioridad_m):
+    def update_tarea (self, id,nombre_tarea_m,prioridad_m,descripcion_m,fecha_inicio_m,fecha_fin_m):
 
-        query= "UPDATE producto SET nombre_tarea = '{}', descripcion = '{}', prioridad = '{}',fecha_inicio ={}, fecha_fin={}, WHERE idproducto = {};".format(nombre_tarea_m,descripcion_m,prioridad_m,fecha_inicio_m,fecha_finalizacion_m,id)
+        query= "UPDATE tareas SET nombre_tarea = '{}', prioridad = '{}',descripcion = '{}', fecha_inicio ={}, fecha_fin={}, WHERE idproducto = {};".format(nombre_tarea_m,prioridad_m,descripcion_m,fecha_inicio_m,fecha_fin_m,id)
 
         try:
             self.cursor.execute(query)
