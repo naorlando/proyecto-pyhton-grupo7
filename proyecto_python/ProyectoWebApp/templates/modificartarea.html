@@ -14,16 +14,20 @@
       <input type="text" class="form-control" name="nombre" value="{{ tarea.1 }}" required>
     </div>
     <div class="mb-3">
-      <label for="" class="form-label">Descripcion</label>
-      <input type="text" class="form-control" name="descripcion" value="{{ tarea.2 }}" required>
-    </div>
-    <div class="mb-3">
-      <label for="" class="form-label">Fecha finalizacion</label>
-      <input type="date" class="form-control" name="fecha_finalizacion" value="{{ producto.4 }}" required>
-    </div>
-    <div class="mb-3">
       <label for="" class="form-label">Prioridad</label>
-      <input type="text" class="form-control" name="prioridad" value="{{ tarea.5 }}" required>
+      <input type="text" class="form-control" name="prioridad" value="{{ tarea.2 }}" required>
+    </div>
+    <div class="mb-3">
+      <label for="" class="form-label">Descripcion</label>
+      <input type="text" class="form-control" name="descripcion" value="{{ tarea.3 }}" required>
+    </div>
+    <div class="mb-3">
+      <label for="" class="form-label">Fecha de Inicio</label>
+      <input type="date" class="form-control" name="fecha_inicio" value="{{ producto.4 }}" required>
+    </div>
+    <div class="mb-3">
+      <label for="" class="form-label">Fecha de Finalizacion</label>
+      <input type="date" class="form-control" name="fecha_fin" value="{{ producto.5 }}" required>
     </div>
     <button type="submit" class="btn btn-warning">Modificar</button>
   </form>
