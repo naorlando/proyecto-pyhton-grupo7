@@ -1,35 +1,60 @@
 {%extends 'base.html'%}
 
-{% block title %} Home {% endblock %}
+{% block title %} Modificar Tarea {% endblock %}
 
 
 {% block content %}
 
-<h1>MODIFICAR TAREA</h1>
-
-<form class="m-5" action="" method="POST">
-    {% csrf_token %}
-    <div class="mb-3">
-      <label for="" class="form-label">Nombre</label>
-      <input type="text" class="form-control" name="nombre" value="{{ tarea.1 }}" required>
+<div class="container my-4 border rounded shadow">
+  <div class="row mx-5 mt-4">
+    <div class="col-md-8">
+      <h1>MODIFICAR TAREA</h1>
     </div>
-    <div class="mb-3">
-      <label for="" class="form-label">Prioridad</label>
-      <input type="text" class="form-control" name="prioridad" value="{{ tarea.2 }}" required>
-    </div>
-    <div class="mb-3">
-      <label for="" class="form-label">Descripcion</label>
-      <input type="text" class="form-control" name="descripcion" value="{{ tarea.3 }}" required>
-    </div>
-    <div class="mb-3">
-      <label for="" class="form-label">Fecha de Inicio</label>
-      <input type="date" class="form-control" name="fecha_inicio" value="{{ producto.4 }}" required>
-    </div>
-    <div class="mb-3">
-      <label for="" class="form-label">Fecha de Finalizacion</label>
-      <input type="date" class="form-control" name="fecha_fin" value="{{ producto.5 }}" required>
-    </div>
-    <button type="submit" class="btn btn-warning">Modificar</button>
+    <hr>
+  </div>
+    <form class="row mx-5 my-3" action="" method="POST">
+      {% csrf_token %}
+        <div class="col-md-6">
+          <div class="input-group">
+            <span class="input-group-text">Nombre</span>
+            <input type="text" class="form-control" name="nombre" value="{{ tarea.1 }}" required>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="input-group">
+            <span class="input-group-text">Prioridad</span>
+            <select class="form-select" name="prioridad">
+              <option selected>{{ tarea.2 }}</option>
+              <option>Alta</option>
+              <option>Media</option>
+              <option>Baja</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-12 my-4">
+          <textarea type="text" class="form-control" name="descripcion" rows="4" maxlength="250" required>{{ tarea.3 }}</textarea>
+          <div id="emailHelp" class="form-text">Descripción de hasta 250 caracteres.</div>
+        </div>
+        <div class="col-md-3 mb-3">
+          <label for="" class="form-label">Fecha de Inicio</label>
+          <input type="date" class="form-control" name="fecha_inicio" value="{{ producto.4 }}" required>
+        </div>
+        <div class="col-md-3 mb-3">
+          <label for="" class="form-label">Hora de Finalizacion</label>
+          <input type="time" class="form-control" name="fecha_fin" value="{{ producto.4 }}" required>
+        </div>
+        <div class="col-md-3 mb-3">
+          <label for="" class="form-label">Fecha de Finalizacion</label>
+          <input type="date" class="form-control" name="fecha_fin" value="{{ producto.5 }}" required>
+        </div>
+        <div class="col-md-3 mb-3">
+          <label for="" class="form-label">Hora de Finalizacion</label>
+          <input type="time" class="form-control" name="fecha_fin" value="{{ producto.5 }}" disabled>
+        </div>
+        <div class="d-grid d-md-flex justify-content-md-end my-4">
+          <button type="submit" class="btn btn-warning btn-lg text-white shadow">Modificar</button>
+        </div>
   </form>
+</div>
 
 {% endblock %}
