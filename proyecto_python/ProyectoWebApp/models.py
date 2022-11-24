@@ -25,8 +25,8 @@ class Database():
         self.cursor.execute(sql)
         tasks=self.cursor.fetchall()
         tasks=list(tasks)
-        for task in tasks:
-            print(task[1])
+        # for task in tasks:
+        #     print(task[1])
         return tasks
 
     def get_tarea (self,id):

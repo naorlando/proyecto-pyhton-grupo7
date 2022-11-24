@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
 from datetime import datetime
+from django.core.paginator import Paginator
+from django.http import Http404
 from .models import Database
 # Create your views here.
 
@@ -7,13 +9,22 @@ from .models import Database
 def home(request):
     return render(request,'home.html')
 
-def tareas(request):
+def listar_tareas(request):
     db=Database()
     info=db.all_task()
-    for user in info:
-        print(user[1])
 
-    return render(request,'tareas.html',{'tareas': info})
+    # for user in info:
+    #     print(user[1])
+
+    nro_pagina = request.GET.get('page',1)
+
+    try:
+        paginado = Paginator(info,6)
+        info = paginado.page(nro_pagina)
+    except:
+        raise Http404
+
+    return render(request,'tareas.html',{'tareas': info, 'paginado': paginado})
 
 def modificar_tarea(request,id):
     db = Database()
@@ -23,6 +34,13 @@ def modificar_tarea(request,id):
     fecha_inicio_t = tarea[4].strftime('%Y-%m-%d')
     hora_inicio_t = tarea[4].strftime('%H:%M')
     fecha_fin_t = tarea[5].strftime('%Y-%m-%d')
+
+    data = {
+        'tarea': tarea,
+        'fecha_inicio_t': fecha_inicio_t,
+        'hora_inicio_t': hora_inicio_t,
+        'fecha_fin_t': fecha_fin_t
+    }
 
     if request.method == "POST":
 
@@ -38,7 +56,7 @@ def modificar_tarea(request,id):
 
         return redirect('/tareas')
 
-    return render(request,'modificartarea.html',{'tarea': tarea,'fecha_inicio_t': fecha_inicio_t,'hora_inicio_t': hora_inicio_t,'fecha_fin_t': fecha_fin_t})
+    return render(request,'modificartarea.html',data)
 
 def crear_tarea(request):
     return render(request,'creartarea.html')

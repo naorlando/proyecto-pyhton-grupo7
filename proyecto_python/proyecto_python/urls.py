@@ -20,7 +20,7 @@ from ProyectoWebApp import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',views.home,name='Home'),
-    path('tareas/',views.tareas,name='Tareas'),
+    path('tareas/',views.listar_tareas,name='Tareas'),
     path('tareas/modificar/<int:id>',views.modificar_tarea,name='ModificarTarea'),
     path('tareas/crear',views.crear_tarea,name='CrearTarea'),
     path('tareas/eliminar/<int:id>',views.eliminar_tarea,name='EliminarTarea')
