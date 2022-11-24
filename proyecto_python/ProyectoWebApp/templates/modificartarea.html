@@ -37,19 +37,19 @@
         </div>
         <div class="col-md-3 mb-3">
           <label for="" class="form-label">Fecha de Inicio</label>
-          <input type="date" class="form-control" name="fecha_inicio" value="{{ producto.4 }}" required>
+          <input type="date" class="form-control" name="fecha_inicio" min="2021-01-01" max="2027-12-31" value="{{ fecha_inicio_t }}" required>
         </div>
         <div class="col-md-3 mb-3">
           <label for="" class="form-label">Hora de Finalizacion</label>
-          <input type="time" class="form-control" name="fecha_fin" value="{{ producto.4 }}" required>
+          <input type="time" class="form-control" name="hora_inicio" value="{{ hora_inicio_t }}" required>
         </div>
         <div class="col-md-3 mb-3">
           <label for="" class="form-label">Fecha de Finalizacion</label>
-          <input type="date" class="form-control" name="fecha_fin" value="{{ producto.5 }}" required>
+          <input type="date" class="form-control" name="fecha_fin" min="2021-01-01" max="2027-12-31" value="{{ fecha_fin_t }}" required>
         </div>
         <div class="col-md-3 mb-3">
           <label for="" class="form-label">Hora de Finalizacion</label>
-          <input type="time" class="form-control" name="fecha_fin" value="{{ producto.5 }}" disabled>
+          <input type="time" class="form-control" name="hora_fin" disabled>
         </div>
         <div class="d-grid d-md-flex justify-content-md-end my-4">
           <button type="submit" class="btn btn-warning btn-lg text-white shadow">Modificar</button>

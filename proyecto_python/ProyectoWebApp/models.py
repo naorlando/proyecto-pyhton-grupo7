@@ -39,8 +39,10 @@ class Database():
 
             # print("ID:",task[0])
             # print("Nombre:",task[1])
-            # print("fechaini:",task[3])
-            # print("prioridad:",task[5])
+            # print("Prioridad:",task[2])
+            # print("Descripcion:",task[3])
+            # print("Fecha Inicio:",task[4])
+            # print("Fecha Fin:",task[5])
 
             return task
 
@@ -50,7 +52,7 @@ class Database():
 
     def update_tarea (self, id,nombre_tarea_m,prioridad_m,descripcion_m,fecha_inicio_m,fecha_fin_m):
 
-        query= "UPDATE tareas SET nombre_tarea = '{}', prioridad = '{}', descripcion = '{}', fecha_inicio ={}, fecha_fin={} WHERE idtarea = {};".format(nombre_tarea_m,prioridad_m,descripcion_m,fecha_inicio_m,fecha_fin_m,id)
+        query= "UPDATE tareas SET nombre_tarea = '{}', prioridad = '{}', descripcion = '{}', fecha_inicio = '{}', fecha_fin = '{}' WHERE idtarea = {};".format(nombre_tarea_m,prioridad_m,descripcion_m,fecha_inicio_m,fecha_fin_m,id)
 
         try:
             self.cursor.execute(query)
