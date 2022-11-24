@@ -21,6 +21,7 @@
           <h5 class="card-title">{{tarea.1}}</h5>
           <hr>
           <p class="card-text">Prioridad: {{tarea.2}}</p>
+          <p class="card-text">Fecha limite :{{tarea.4|date}}</p>
           <a href="{% url 'ModificarTarea' tarea.0 %}" class="btn btn-warning text-white">Modificar</a>
           <a href="{% url 'EliminarTarea' tarea.0 %}" class="btn btn-outline-danger">Eliminar</a>
         </div>

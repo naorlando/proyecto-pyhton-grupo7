@@ -7,26 +7,28 @@ from .models import Database
 
 
 def home(request):
-    return render(request,'home.html')
+    return render(request, 'home.html')
+
 
 def listar_tareas(request):
-    db=Database()
-    info=db.all_task()
+    db = Database()
+    info = db.all_task()
 
     # for user in info:
     #     print(user[1])
 
-    nro_pagina = request.GET.get('page',1)
+    nro_pagina = request.GET.get('page', 1)
 
     try:
-        paginado = Paginator(info,6)
+        paginado = Paginator(info, 6)
         info = paginado.page(nro_pagina)
     except:
         raise Http404
 
-    return render(request,'tareas.html',{'tareas': info, 'paginado': paginado})
+    return render(request, 'tareas.html', {'tareas': info, 'paginado': paginado})
 
-def modificar_tarea(request,id):
+
+def modificar_tarea(request, id):
     db = Database()
     tarea = db.get_tarea(id)
     # prod = Item.objects.get(idproducto = id)
@@ -52,16 +54,37 @@ def modificar_tarea(request,id):
         descripcion_m = request.POST.get('descripcion')
         fecha_inicio_m = fecha_inicio_aux + ' ' + hora_inicio_aux
         fecha_fin_m = request.POST.get('fecha_fin')
-        db.update_tarea(id,nombre_tarea_m,prioridad_m,descripcion_m,fecha_inicio_m,fecha_fin_m)
+        db.update_tarea(id, nombre_tarea_m, prioridad_m,
+                        descripcion_m, fecha_inicio_m, fecha_fin_m)
 
         return redirect('/tareas')
 
-    return render(request,'modificartarea.html',data)
+    return render(request, 'modificartarea.html', data)
+
 
 def crear_tarea(request):
-    return render(request,'creartarea.html')
+    db = Database()
 
-def eliminar_tarea(request,id):
+    if request.method == "POST":
+
+        fecha_inicio_aux = request.POST.get('fecha_inicio')
+        hora_inicio_aux = request.POST.get('hora_inicio')
+       
+
+        nombre_tarea_m = request.POST.get('nombre')
+        prioridad_m = request.POST.get('prioridad')
+        descripcion_m = request.POST.get('descripcion')
+        fecha_inicio_m = fecha_inicio_aux + ' ' + hora_inicio_aux
+        fecha_fin_m = request.POST.get('fecha_fin')
+        db.create_tarea(nombre_tarea_m, prioridad_m,
+                        descripcion_m, fecha_inicio_m, fecha_fin_m)
+
+        return redirect('/tareas')
+
+    return render(request, 'creartarea.html')
+
+
+def eliminar_tarea(request, id):
     db = Database()
     db.delete_tarea(id)
 

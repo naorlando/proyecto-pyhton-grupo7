@@ -10,7 +10,7 @@ class Database():
         self.connection = pymysql.connect(
         host='localhost',
         user='root',
-        password='',
+        password='1234',
         db='python-utn'
     ) 
     #chequeo que la bbdd este en funcionamiento, sino no se conecta
@@ -74,4 +74,15 @@ class Database():
             print("Error al eliminar la tarea")
             raise
 
+    def create_tarea (self,nombre_tarea_m,prioridad_m,descripcion_m,fecha_inicio_m,fecha_fin_m):
 
+
+        query= "INSERT INTO tareas VALUES ('{}','{}','{}','{}','{}');".format(nombre_tarea_m,prioridad_m,descripcion_m,fecha_inicio_m,fecha_fin_m)
+
+        try:
+            self.cursor.execute(query)
+            self.connection.commit()
+
+        except Exception as e:
+            print("Error al modificar la tarea")
+            raise
