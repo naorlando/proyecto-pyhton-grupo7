@@ -1,28 +1,34 @@
 {%extends 'base.html'%}
 
-{% block title %} Productos {% endblock %}
+{% block title %} Lista De Tareas {% endblock %}
 
 
 {% block content %}
 
-<h1>TAREAS</h1>
-
-    <div class="row row-cols-1 row-cols-md-3 g-4 m-3">
+<div class="container p-0">
+  <div class="row">
+    <div class="col">
+      <h1>TAREAS</h1>
+    </div>
+  </div>
+  <hr>
+  <div class="row row-cols-1 row-cols-md-3 g-4 my-4">
 
     {% for tarea in tareas %}
     <div class="col">
-        <div class="col">
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title">{{tarea.1}}</h5>
-                <p class="card-text">Prioridad: {{tarea.2}}</p>
-                <a href="{% url 'ModificarTarea' tarea.0 %}" class="btn btn-primary">Modificar</a>
-              </div>
-            </div>
-          </div>
+      <div class="card shadow">
+        <div class="card-body">
+          <h5 class="card-title">{{tarea.1}}</h5>
+          <hr>
+          <p class="card-text">Prioridad: {{tarea.2}}</p>
+          <a href="{% url 'ModificarTarea' tarea.0 %}" class="btn btn-warning text-white">Modificar</a>
+          <a href="{% url 'EliminarTarea' tarea.0 %}" class="btn btn-outline-danger">Eliminar</a>
+        </div>
+      </div>
     </div>
     {% endfor %}
     
+  </div>
 </div>
 
 {% endblock %}
