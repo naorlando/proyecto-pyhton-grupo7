@@ -20,21 +20,6 @@ class Database():
         print("La conexion fue exitosa")
     
     #METODOS
-<<<<<<< HEAD
-    def all_task(self):
-        sql='SELECT * FROM tareas'
-
-        self.cursor.execute(sql)
-        tasks=self.cursor.fetchall()
-        tasks=list(tasks)
-        # for task in tasks:
-        #     print(task[1])
-        return tasks
-
-    def get_tarea (self,id):
-        
-        query = "SELECT * FROM tareas WHERE idtarea={}".format(id)
-=======
     def all_tareas (self):
         query ='SELECT * FROM tareas'
 
@@ -47,27 +32,17 @@ class Database():
 
     def get_tarea (self, ide):
         query = "SELECT * FROM tareas WHERE idtarea = '{}'".format(ide)
->>>>>>> fabrizio
 
         try:
             self.cursor.execute(query)
             task = self.cursor.fetchone()
 
-<<<<<<< HEAD
-            # print("ID:",task[0])
-            # print("Nombre:",task[1])
-            # print("Prioridad:",task[2])
-            # print("Descripcion:",task[3])
-            # print("Fecha Inicio:",task[4])
-            # print("Fecha Fin:",task[5])
-=======
             print("ID:", task[0])
             print("Nombre:", task[1])
             print("Prioidad:", task[2])
             print("Descripcion:", task[3])
             print("Fecha de inicio:", task[4])
             print("Fecha de fin:", task[5])
->>>>>>> fabrizio
 
             return task
 
@@ -75,11 +50,6 @@ class Database():
             print("La tarea no existe")
             raise
 
-<<<<<<< HEAD
-    def update_tarea (self, id,nombre_tarea_m,prioridad_m,descripcion_m,fecha_inicio_m,fecha_fin_m):
-
-        query= "UPDATE tareas SET nombre_tarea = '{}', prioridad = '{}', descripcion = '{}', fecha_inicio = '{}',fecha_fin = '{}' WHERE idtarea = {};".format(nombre_tarea_m,prioridad_m,descripcion_m,fecha_inicio_m,fecha_fin_m,id)
-=======
     def get_tareas_x_prioridad(self, prioridad_m):
         query = "SELECT * FROM tareas WHERE prioridad = '{}'".format(prioridad_m)
         
@@ -99,7 +69,6 @@ class Database():
     def update_tarea(self, ide, nombre_tarea_m, prioridad_m, descripcion_m, fecha_inicio_m, fecha_fin_m):
         query = "UPDATE tareas SET nombre_tarea = '{}', prioridad = '{}', descripcion = '{}', fecha_inicio = '{}',\
         fecha_fin = '{}' WHERE idtarea = '{}'".format(nombre_tarea_m, prioridad_m, descripcion_m, fecha_inicio_m, fecha_fin_m, ide)
->>>>>>> fabrizio
 
         try:
             self.cursor.execute(query)
@@ -109,29 +78,14 @@ class Database():
             print("Error al modificar la tarea")
             raise
     
-<<<<<<< HEAD
-    def delete_tarea (self,id):
-
-        query = "DELETE FROM tareas WHERE idtarea = {};".format(id)
-=======
     def update_nombre_tarea(self, ide, nombre_tarea_m):
         query = "UPDATE tareas SET nombre_tarea = '{}' WHERE idtarea = '{}'".format(nombre_tarea_m, ide)
->>>>>>> fabrizio
 
         try:
             self.cursor.execute(query)
             self.connection.commit()
 
         except Exception as e:
-<<<<<<< HEAD
-            print("Error al eliminar la tarea")
-            raise
-
-    def create_tarea (self,nombre_tarea_m,prioridad_m,descripcion_m,fecha_inicio_m,fecha_fin_m):
-
-        query= "INSERT INTO tareas (nombre_tarea,prioridad,descripcion,fecha_inicio,fecha_fin) VALUES ('{}','{}','{}','{}','{}');".format(nombre_tarea_m,prioridad_m,descripcion_m,fecha_inicio_m,fecha_fin_m)
-
-=======
             print("Error al modificar el nombre")
             raise
 
@@ -149,16 +103,11 @@ class Database():
     def update_descripcion_tarea(self, ide, prioridad_m):
         query = "UPDATE tareas SET descripcion = '{}' WHERE idtarea = '{}'".format(prioridad_m, ide)
 
->>>>>>> fabrizio
         try:
             self.cursor.execute(query)
             self.connection.commit()
 
         except Exception as e:
-<<<<<<< HEAD
-            print("Error al crear la tarea")
-            raise
-=======
             print("Error al modificar la prioridad")
             raise
     
@@ -215,4 +164,3 @@ class Database():
 #db.update_fecha_fin_tarea(5, f2)
 #db.get_tareas_x_prioridad("baja")
 #db.close()
->>>>>>> fabrizio
