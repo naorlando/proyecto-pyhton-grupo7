@@ -156,11 +156,11 @@ class Database():
     def close(self):
         self.connection.close()
 
-f1 = d.datetime(2022, 11, 23, 16, 45) #23-11-2022 16:45
-f2 = d.datetime(2022, 12, 24, 0, 0) 
-db = Database()
+#f1 = d.datetime(2022, 11, 23, 16, 45) #23-11-2022 16:45
+#f2 = d.datetime(2022, 12, 24, 0, 0) 
+#db = Database()
 #db.update_descripcion_tarea(6, "tarea dos")
 #db.update_prioridad_tarea(6, "alta")
 #db.update_fecha_fin_tarea(5, f2)
-db.get_tareas_x_prioridad("baja")
-db.close()
+#db.get_tareas_x_prioridad("baja")
+#db.close()
