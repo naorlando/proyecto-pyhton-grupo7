@@ -3,6 +3,7 @@ from datetime import datetime
 from django.core.paginator import Paginator
 from django.http import Http404
 from .models import Database
+import json
 # Create your views here.
 
 
@@ -67,19 +68,24 @@ def crear_tarea(request):
 
     if request.method == "POST":
 
-        fecha_inicio_aux = request.POST.get('fecha_inicio')
-        hora_inicio_aux = request.POST.get('hora_inicio')
-       
+        if request.POST.get('archivoJson'):
+            
+            return redirect('/')
 
-        nombre_tarea_m = request.POST.get('nombre')
-        prioridad_m = request.POST.get('prioridad')
-        descripcion_m = request.POST.get('descripcion')
-        fecha_inicio_m = fecha_inicio_aux + ' ' + hora_inicio_aux
-        fecha_fin_m = request.POST.get('fecha_fin')
-        db.create_tarea(nombre_tarea_m, prioridad_m,
-                        descripcion_m, fecha_inicio_m, fecha_fin_m)
+        else:
 
-        return redirect('/tareas')
+            fecha_inicio_aux = request.POST.get('fecha_inicio')
+            hora_inicio_aux = request.POST.get('hora_inicio')
+        
+
+            nombre_tarea_m = request.POST.get('nombre')
+            prioridad_m = request.POST.get('prioridad')
+            descripcion_m = request.POST.get('descripcion')
+            fecha_inicio_m = fecha_inicio_aux + ' ' + hora_inicio_aux
+            fecha_fin_m = request.POST.get('fecha_fin')
+            db.create_tarea(nombre_tarea_m, prioridad_m, descripcion_m, fecha_inicio_m, fecha_fin_m)
+
+            return redirect('/tareas')
 
     return render(request, 'creartarea.html')
 
