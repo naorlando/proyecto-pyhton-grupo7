@@ -66,21 +66,45 @@ def modificar_tarea(request, id):
 
 def crear_tarea(request):
     db = Database()
-    formJson = TareaJsonForm()
+    form = TareaJsonForm()
 
     if request.method == "POST":
 
         # if request.POST.get('archivoJson'):
-        tareaJson = TareaJsonForm(request.POST, request.FILES)
+        form = TareaJsonForm(request.POST, request.FILES)
 
-        if tareaJson.is_valid():
+        # En caso de utilizar el formulario input file
+        if form.is_valid():
             
-            with open('ProyectoWebApp/static/archivos/data.json', "wb+") as destino:
-                for chunk in request.FILES['file'].chunks():
-                    destino.write(chunk)
+            # Crea el archivo data.json con la info recibida y lo cierra
+            tareaJson = open('ProyectoWebApp/static/archivos/data.json', "wb+")
+            for i in request.FILES['file'].chunks():
+                tareaJson.write(i)
+            tareaJson.close()
 
-            return redirect('/')
+            # Abre el archivo cerado, lo lee y almacena como str en una variable, y lo cierra
+            tareaJson = open('ProyectoWebApp/static/archivos/data.json', "r")
+            tareas = tareaJson.read()
+            tareaJson.close()
 
+            # Transformama el json leido a un diccionario, lo recorre y almacena cada valor
+            try:
+                data = json.loads(tareas)
+                for i in data:
+                    nombre_tarea_m = i['nombre_tarea']
+                    prioridad_m = i['prioridad']
+                    descripcion_m = i['descripcion']
+                    fecha_inicio_m = i['fecha_inicio']
+                    fecha_fin_m = i['fecha_fin']
+                    db.create_tarea(nombre_tarea_m, prioridad_m, descripcion_m, fecha_inicio_m, fecha_fin_m)
+
+                return redirect('/tareas')
+                
+            except:
+                return redirect('/')
+
+
+        # En caso de utilizar el formulario manual
         else:
 
             fecha_inicio_aux = request.POST.get('fecha_inicio')
@@ -96,7 +120,7 @@ def crear_tarea(request):
 
             return redirect('/tareas')
 
-    return render(request, 'creartarea.html', {'form':formJson})
+    return render(request, 'creartarea.html', {'form':form})
 
 
 def eliminar_tarea(request, id):
