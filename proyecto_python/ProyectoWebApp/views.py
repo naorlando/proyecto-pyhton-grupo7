@@ -3,6 +3,7 @@ from datetime import datetime
 from django.core.paginator import Paginator
 from django.http import Http404
 from .models import Database
+from .forms import TareaJsonForm
 import json
 # Create your views here.
 
@@ -65,11 +66,19 @@ def modificar_tarea(request, id):
 
 def crear_tarea(request):
     db = Database()
+    formJson = TareaJsonForm()
 
     if request.method == "POST":
 
-        if request.POST.get('archivoJson'):
+        # if request.POST.get('archivoJson'):
+        tareaJson = TareaJsonForm(request.POST, request.FILES)
+
+        if tareaJson.is_valid():
             
+            with open('ProyectoWebApp/static/archivos/data.json', "wb+") as destino:
+                for chunk in request.FILES['file'].chunks():
+                    destino.write(chunk)
+
             return redirect('/')
 
         else:
@@ -87,7 +96,7 @@ def crear_tarea(request):
 
             return redirect('/tareas')
 
-    return render(request, 'creartarea.html')
+    return render(request, 'creartarea.html', {'form':formJson})
 
 
 def eliminar_tarea(request, id):

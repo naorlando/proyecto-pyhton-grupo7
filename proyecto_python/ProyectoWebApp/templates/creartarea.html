@@ -71,15 +71,18 @@
           </div>
           <hr>
         </div>
-          <form class="row" action="" method="POST">
+          <form class="row" action="" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
               <div class="col-md-12">
                 <div class="mb-3">
                   <p><small><em>También podés subir un archivo con los datos de la tarea o las tareas que deseas crear</em></small></p>
-                  <input class="form-control form-control-sm" type="file" accept=".json" name="archivoJson" required>
+                
+                  {{ form.as_p }}
+
                   <div class="form-text">(Sólo archivos .json)</div>
                 </div>
               </div>
+
               <div class="d-grid d-md-flex justify-content-md-end my-4">
                 <button type="submit" class="btn btn-warning btn-lg text-white shadow">Crear</button>
               </div>
