@@ -5,52 +5,93 @@
 
 {% block content %}
 
-<div class="container my-4 border rounded shadow">
-  <div class="row mx-5 mt-4">
-    <div class="col-md-8">
-      <h1>CREAR TAREA</h1>
+<div class="container p-0 my-4">
+  <div class="row">
+    <div class="col-8">
+
+      <!-- Crear Tarea -->
+      <div class="container border rounded shadow">
+        <div class="row mx-5 mt-4">
+          <div class="col-md-8">
+            <h1>CREAR TAREA</h1>
+          </div>
+          <hr>
+        </div>
+          <form class="row mx-5 my-3" action="" method="POST">
+            {% csrf_token %}
+              <div class="col-md-7">
+                <div class="input-group">
+                  <span class="input-group-text">Nombre</span>
+                  <input type="text" class="form-control" name="nombre" required>
+                </div>
+              </div>
+              <div class="col-md-5">
+                <div class="input-group">
+                  <span class="input-group-text">Prioridad</span>
+                  <select class="form-select" name="prioridad">
+                    <option selected></option>
+                    <option>Alta</option>
+                    <option>Media</option>
+                    <option>Baja</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-12 my-4">
+                <textarea type="text" class="form-control" name="descripcion" rows="4" maxlength="250" required></textarea>
+                <div class="form-text">(Descripción de hasta 250 caracteres)</div>
+              </div>
+              <div class="col-md-4 mb-3">
+                <label class="form-label">Fecha de Inicio</label>
+                <input type="date" class="form-control" name="fecha_inicio" min="2021-01-01" max="2027-12-31" required>
+              </div>
+              <div class="col-md-4 mb-3">
+                <label class="form-label">Hora de Inicio</label>
+                <input type="time" class="form-control" name="hora_inicio" required>
+              </div>
+              <div class="col-md-4 mb-3">
+                <label class="form-label">Fecha de Finalizacion</label>
+                <input type="date" class="form-control" name="fecha_fin" min="2021-01-01" max="2027-12-31" required>
+              </div>
+              <div class="d-grid d-md-flex justify-content-md-end my-4">
+                <button type="submit" class="btn btn-warning btn-lg text-white shadow">Crear</button>
+              </div>
+        </form>
+      </div>
+      <!-- Fin Crear Tarea -->
+
     </div>
-    <hr>
+
+    <div class="col-4">
+
+      <!-- Crear Tarea con Json -->
+      <div class="container border rounded shadow">
+        <div class="row mx-3 mt-4">
+          <div class="col-md-8">
+            <h3>JSON File</h3>
+          </div>
+          <hr>
+        </div>
+          <form class="row" action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+              <div class="col-md-12">
+                <div class="mb-3">
+                  <p><small><em>También podés subir un archivo con los datos de la tarea o las tareas que deseas crear</em></small></p>
+                
+                  {{ form.as_p }}
+
+                  <div class="form-text">(Sólo archivos .json)</div>
+                </div>
+              </div>
+
+              <div class="d-grid d-md-flex justify-content-md-end my-4">
+                <button type="submit" class="btn btn-warning btn-lg text-white shadow">Crear</button>
+              </div>
+        </form>
+      </div>
+      <!-- Fin Crear Tarea con Json -->
+
+    </div>
   </div>
-    <form class="row mx-5 my-3" action="" method="POST">
-      {% csrf_token %}
-        <div class="col-md-6">
-          <div class="input-group">
-            <span class="input-group-text">Nombre</span>
-            <input type="text" class="form-control" name="nombre" required>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="input-group">
-            <span class="input-group-text">Prioridad</span>
-            <select class="form-select" name="prioridad">
-              <option selected></option>
-              <option>Alta</option>
-              <option>Media</option>
-              <option>Baja</option>
-            </select>
-          </div>
-        </div>
-        <div class="col-md-12 my-4">
-          <textarea type="text" class="form-control" name="descripcion" rows="4" maxlength="250" required></textarea>
-          <div id="emailHelp" class="form-text">Descripción de hasta 250 caracteres.</div>
-        </div>
-        <div class="col-md-3 mb-3">
-          <label for="" class="form-label">Fecha de Inicio</label>
-          <input type="date" class="form-control" name="fecha_inicio" min="2021-01-01" max="2027-12-31" required>
-        </div>
-        <div class="col-md-3 mb-3">
-          <label for="" class="form-label">Hora de Inicio</label>
-          <input type="time" class="form-control" name="hora_inicio" required>
-        </div>
-        <div class="col-md-3 mb-3">
-          <label for="" class="form-label">Fecha de Finalizacion</label>
-          <input type="date" class="form-control" name="fecha_fin" min="2021-01-01" max="2027-12-31" required>
-        </div>
-        <div class="d-grid d-md-flex justify-content-md-end my-4">
-          <button type="submit" class="btn btn-warning btn-lg text-white shadow">Crear</button>
-        </div>
-  </form>
 </div>
 
 {% endblock %}
