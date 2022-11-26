@@ -77,13 +77,13 @@ def crear_tarea(request):
         if form.is_valid():
             
             # Crea el archivo data.json con la info recibida y lo cierra
-            tareaJson = open('ProyectoWebApp/static/archivos/data.json', "wb+")
+            tareaJson = open('ProyectoWebApp/static/data.json', "wb+")
             for i in request.FILES['file'].chunks():
                 tareaJson.write(i)
             tareaJson.close()
 
             # Abre el archivo cerado, lo lee y almacena como str en una variable, y lo cierra
-            tareaJson = open('ProyectoWebApp/static/archivos/data.json', "r")
+            tareaJson = open('ProyectoWebApp/static/data.json', "r")
             tareas = tareaJson.read()
             tareaJson.close()
 
