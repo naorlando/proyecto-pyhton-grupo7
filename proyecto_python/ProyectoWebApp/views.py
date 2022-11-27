@@ -4,6 +4,7 @@ from django.core.paginator import Paginator
 from django.http import Http404
 from .models import Database
 from .forms import TareaJsonForm
+from os import remove
 import json
 # Create your views here.
 
@@ -97,6 +98,9 @@ def crear_tarea(request):
                     fecha_inicio_m = i['fecha_inicio']
                     fecha_fin_m = i['fecha_fin']
                     db.create_tarea(nombre_tarea_m, prioridad_m, descripcion_m, fecha_inicio_m, fecha_fin_m)
+
+                # Elimina el archivo
+                remove('ProyectoWebApp/static/data.json')
 
                 return redirect('/tareas')
                 
