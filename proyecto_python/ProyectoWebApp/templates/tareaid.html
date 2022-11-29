@@ -1,0 +1,50 @@
+{%extends 'base.html'%}
+
+{% block title %} {{ tarea.1 }} {% endblock %}
+
+
+{% block content %}
+
+<div class="container my-4 border rounded shadow">
+  <div class="row mx-5 mt-4">
+    <div class="col-md-8">
+      <h1>{{ tarea.1 }}</h1>
+    </div>
+    <hr>
+  </div>
+    <form class="row mx-5 my-3">
+      {% csrf_token %}
+      <div class="col-md-6">
+        <div class="input-group">
+          <span class="input-group-text">Nombre</span>
+          <input type="text" readonly class="form-control" name="nombre" value="{{ tarea.1 }}">
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="input-group">
+          <span class="input-group-text">Prioridad</span>
+          <input type="text" readonly class="form-control" name="prioridad" value="{{ tarea.2 }}">
+        </div>
+      </div>
+      <div class="col-md-12 my-4">
+        <textarea type="text" readonly class="form-control" name="descripcion" rows="4" maxlength="250">{{ tarea.3 }}</textarea>
+      </div>
+      <div class="mb-3 row">
+        <label for="staticEmail" class="col-sm-2 col-form-label">Fecha inicio</label>
+        <div class="col-sm-10">
+          <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{ tarea.4 }}">
+        </div>
+      </div>
+      <div class="mb-3 row">
+        <label for="staticEmail" class="col-sm-2 col-form-label">Fecha finalizacion</label>
+        <div class="col-sm-10">
+          <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{ tarea.5 }}">
+        </div>
+      </div>
+        <div class="d-grid d-md-flex justify-content-md-end my-4">
+          <a href="{% url 'ModificarTarea' tarea.0 %}" class="btn btn-dark btn-lg text-white shadow">Modificar</a>
+        </div>
+  </form>
+</div>
+
+{% endblock %}
