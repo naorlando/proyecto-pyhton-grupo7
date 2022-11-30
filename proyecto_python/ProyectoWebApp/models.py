@@ -2,9 +2,16 @@ from django.db import models
 import pymysql
 import datetime as d
 
-# Create your models here.
+#definimos la clase Tarea
+class Tarea():
+    def __init__(self, nombre_tarea, prioridad, descripcion, fecha_inicio, fecha_fin):
+        self.nombre_tarea = nombre_tarea
+        self.prioridad = prioridad
+        self.descripcion = descripcion
+        self.fecha_inicio = fecha_inicio
+        self.fecha_fin = fecha_fin
 
-#definimos un objetos Base de datos
+#definimos la clase de nuestra Base de datos
 class Database():
     #creamos el constructor con la bbdd elegida a traves de pymysql
     def __init__(self):

@@ -2,11 +2,10 @@ from django.shortcuts import render, redirect
 from datetime import datetime
 from django.core.paginator import Paginator
 from django.http import Http404
-from .models import Database
+from .models import Database, Tarea
 from .forms import TareaJsonForm
 from os import remove
 import json
-# Create your views here.
 
 
 def home(request):
@@ -151,3 +150,23 @@ def tarea_id(request, id):
     }
 
     return render(request, 'tareaid.html', data)
+
+def exportar_tarea(request, id):
+    db = Database()
+    tarea = db.get_tarea(id)
+
+    fecha_inicio_t = tarea[4].strftime('%Y-%m-%d')
+    hora_inicio_t = tarea[4].strftime('%H:%M')
+    fecha_fin_t = tarea[5].strftime('%Y-%m-%d')
+
+    objeto_tarea = Tarea(tarea[1],tarea[2],tarea[3],fecha_inicio_t + ' ' + hora_inicio_t,fecha_fin_t)
+    objeto_tarea = objeto_tarea.__dict__
+
+    tarea_json = json.dumps(objeto_tarea)
+    nombre_archivo = str(tarea[1]) + '.json'
+    
+    jsonFile = open('ProyectoWebApp/static/'+nombre_archivo,'w')
+    jsonFile.write(tarea_json)
+    jsonFile.close()
+
+    return redirect('/tareas/' + str(id))

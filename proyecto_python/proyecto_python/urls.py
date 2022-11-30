@@ -24,5 +24,6 @@ urlpatterns = [
     path('tareas/modificar/<int:id>',views.modificar_tarea,name='ModificarTarea'),
     path('tareas/crear',views.crear_tarea,name='CrearTarea'),
     path('tareas/eliminar/<int:id>',views.eliminar_tarea,name='EliminarTarea'),
-    path('tareas/<int:id>',views.tarea_id,name='VerTarea')
+    path('tareas/<int:id>',views.tarea_id,name='VerTarea'),
+    path('tareas/exportar/<int:id>',views.exportar_tarea,name='ExportarTarea')
 ]
