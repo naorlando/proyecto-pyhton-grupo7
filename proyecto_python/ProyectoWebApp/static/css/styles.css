@@ -1,0 +1,21 @@
+/*Agrandar links del menú al pasar el mouse*/
+.nav-link {
+  transition: ease-in-out 0.3s;
+}
+.nav-link:hover {
+  transform: scale(1.05);
+}
+
+
+/*Agrandar tarea al pasar el mouse*/
+#seccion-tareas .col-tarea a {
+  overflow: hidden;
+  text-decoration: none;
+}
+#seccion-tareas .col-tarea {
+  transition: transform 0.5s ease;
+}
+#seccion-tareas .col-tarea:hover {
+  transform: scale(1.03);
+  cursor: pointer;
+}
