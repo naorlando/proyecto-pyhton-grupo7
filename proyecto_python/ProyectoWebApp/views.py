@@ -30,7 +30,7 @@ def signup(request):
                     username=request.POST['username'], password=request.POST['password1'])
                 user.save()
                 login(request, user)
-                return redirect('Home')
+                return redirect('Tareas')
             # manejo el error integrity (sacando el try catch podemos ver el error)
             except IntegrityError:
                 return render(request, 'signup.html', {
@@ -57,7 +57,7 @@ def signin(request):
         })
         else:
             login(request,user)
-            return redirect('Home')
+            return redirect('Tareas')
 
 def signout(request):
     logout(request)
