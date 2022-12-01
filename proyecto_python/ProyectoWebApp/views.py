@@ -1,16 +1,14 @@
 from django.shortcuts import render, redirect
 from datetime import datetime
 from django.core.paginator import Paginator
-from django.http import Http404
+from django.http import Http404, HttpResponse
 from .models import Database, Tarea
 from .forms import TareaJsonForm
 from os import remove
 import json
 
-
 def home(request):
     return render(request, 'home.html')
-
 
 def listar_tareas(request):
     db = Database()
@@ -28,7 +26,6 @@ def listar_tareas(request):
         raise Http404
 
     return render(request, 'tareas.html', {'tareas': info, 'paginado': paginado})
-
 
 def modificar_tarea(request, id):
     db = Database()
@@ -62,7 +59,6 @@ def modificar_tarea(request, id):
         return redirect('/tareas')
 
     return render(request, 'modificartarea.html', data)
-
 
 def crear_tarea(request):
     db = Database()
@@ -125,13 +121,11 @@ def crear_tarea(request):
 
     return render(request, 'creartarea.html', {'form': form})
 
-
 def eliminar_tarea(request, id):
     db = Database()
     db.delete_tarea(id)
 
     return redirect('/tareas')
-
 
 def tarea_id(request, id):
     db = Database()
@@ -165,8 +159,17 @@ def exportar_tarea(request, id):
     tarea_json = json.dumps(objeto_tarea)
     nombre_archivo = str(tarea[1]) + '.json'
     
-    jsonFile = open('ProyectoWebApp/static/'+nombre_archivo,'w')
+    jsonFile = open('ProyectoWebApp/static/data.json','w+')
     jsonFile.write(tarea_json)
     jsonFile.close()
 
-    return redirect('/tareas/' + str(id))
+    jsonFile = open('ProyectoWebApp/static/data.json','rb')
+    data = jsonFile.read()
+    jsonFile.close()
+
+    response = HttpResponse(data,content_type='text/plain')
+    response['Content-Disposition'] = 'attachement; filename=%s' % nombre_archivo
+
+    remove('ProyectoWebApp/static/data.json')
+
+    return response
