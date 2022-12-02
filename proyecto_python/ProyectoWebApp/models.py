@@ -27,15 +27,18 @@ class Database():
         print("La conexion fue exitosa")
     
     #METODOS
-    def all_task (self):
+    def all_task(self):
         query ='SELECT * FROM tareas WHERE archivado = 0 ORDER BY prioridad_idprioridad, fecha_fin;'
+        try:
+            self.cursor.execute(query)
+            tasks = self.cursor.fetchall()
+            tasks = list(tasks)
+            return tasks
+        except Exception:
+            print("No se pudieron obtener las tareas")
+            raise
 
-        self.cursor.execute(query)
-        tareas=self.cursor.fetchall()
-        tareas=list(tareas)
-        return tareas
-    
-    def get_tarea (self, ide):
+    def get_tarea(self, ide):
         query = "SELECT * FROM tareas WHERE idtarea = '{}'".format(ide)
 
         try:
@@ -54,29 +57,34 @@ class Database():
             self.cursor.execute(query)
             tasks = self.cursor.fetchall()
             return tasks
-
         except Exception as e:
             print("Error al obtener las tareas segun su prioridad")
+            raise
+
+    def get_tareas_caducadas(self):
+        query = 'SELECT * FROM tareas WHERE fecha_fin < CURDATE()'
+        try:
+            self.cursor.execute(query)
+            tasks = self.cursor.fetchall()
+            return tasks
+        except Exception:
+            print("No se pudieron obtener las tareas caducadas")
             raise
 
     def update_tarea(self, ide, nombre_tarea_m, prioridad_m, descripcion_m, fecha_inicio_m, fecha_fin_m):
         query = "UPDATE tareas SET nombre_tarea='{}', prioridad_idprioridad=(SELECT idprioridad FROM prioridad WHERE nombre_prioridad='{}'),\
             descripcion='{}', fecha_fin='{}' WHERE idtarea = '{}'".format(nombre_tarea_m, prioridad_m, descripcion_m, fecha_fin_m, ide)
-
         try:
             self.cursor.execute(query)
             self.connection.commit()
-
         except Exception as e:
             print("Error al modificar la tarea")
             raise
-    
 
     def create_tarea(self, nombre_tarea_m, prioridad_m, descripcion_m, fecha_inicio_m, fecha_fin_m, username_m):
         query = "INSERT INTO tareas(nombre_tarea, prioridad_idprioridad, descripcion, fecha_fin,auth_user_id)\
         VALUES ('{}',(SELECT idprioridad FROM prioridad WHERE nombre_prioridad='{}'),'{}','{}',(SELECT id FROM auth_user WHERE username='{}'))"\
         .format(nombre_tarea_m, prioridad_m , descripcion_m, fecha_fin_m, username_m)
-        
         try:
             self.cursor.execute(query)
             self.connection.commit()
@@ -93,14 +101,17 @@ class Database():
             print("No se pudo archivar la tarea")
             raise
 
-    def all_task_arch (self):
-        query ='SELECT * FROM tareas WHERE archivado = 1 ORDER BY prioridad_idprioridad, fecha_fin;'
+    def all_task_arch(self):
+        query ='SELECT * FROM tareas WHERE archivado = 1 ORDER BY prioridad_idprioridad, fecha_fin;'     
+        try: 
+            self.cursor.execute(query)
+            tasks = self.cursor.fetchall()
+            tasks = list(tasks)
+            return tasks
+        except Exception:
+            print("No se pudieron obtener las tareas archivadas")
+            raise
 
-        self.cursor.execute(query)
-        tareas=self.cursor.fetchall()
-        tareas=list(tareas)
-        return tareas
-    
     def delete_tarea(self, ide):
         query = "DELETE FROM tareas WHERE idtarea = '{}'".format(ide)
         try:
