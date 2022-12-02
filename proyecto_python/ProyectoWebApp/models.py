@@ -74,7 +74,7 @@ class Database():
 
     def create_tarea(self, nombre_tarea_m, prioridad_m, descripcion_m, fecha_inicio_m, fecha_fin_m):
         query="INSERT INTO tareas(nombre_tarea, prioridad_idprioridad, descripcion, fecha_fin,auth_user_id)\
-        VALUES ('{}','{}','{}','{}','{}')".format(nombre_tarea_m, "1", descripcion_m, fecha_fin_m,"3")
+        VALUES ('{}',(SELECT idprioridad FROM prioridad WHERE nombre_prioridad='{}'),'{}','{}','{}')".format(nombre_tarea_m,prioridad_m , descripcion_m, fecha_fin_m,"3")
         
         try:
             self.cursor.execute(query)
@@ -94,3 +94,4 @@ class Database():
     
     def close(self):
         self.connection.close()
+
