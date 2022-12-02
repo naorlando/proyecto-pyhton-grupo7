@@ -19,7 +19,7 @@ class Database():
         host='localhost',
         user='root',
         password='1234',
-        db='python-utn'
+        db='usuariospython'
     ) 
     #chequeo que la bbdd este en funcionamiento, sino no se conecta
     #y lanza un error (no llega al print)

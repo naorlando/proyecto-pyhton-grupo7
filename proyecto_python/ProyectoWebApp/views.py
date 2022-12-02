@@ -86,9 +86,9 @@ def modificar_tarea(request, id):
     tarea = db.get_tarea(id)
     # prod = Item.objects.get(idproducto = id)
 
-    fecha_inicio_t = tarea[4].strftime('%Y-%m-%d')
-    hora_inicio_t = tarea[4].strftime('%H:%M')
-    fecha_fin_t = tarea[5].strftime('%Y-%m-%d')
+    fecha_inicio_t = tarea[3].strftime('%Y-%m-%d')
+    hora_inicio_t = tarea[3].strftime('%H:%M')
+    fecha_fin_t = tarea[4].strftime('%Y-%m-%d')
 
     data = {
         'tarea': tarea,
@@ -189,9 +189,9 @@ def tarea_id(request, id):
     tarea = db.get_tarea(id)
     # prod = Item.objects.get(idproducto = id)
 
-    fecha_inicio_t = tarea[4].strftime('%Y-%m-%d')
-    hora_inicio_t = tarea[4].strftime('%H:%M')
-    fecha_fin_t = tarea[5].strftime('%Y-%m-%d')
+    fecha_inicio_t = tarea[3].strftime('%Y-%m-%d')
+    hora_inicio_t = tarea[3].strftime('%H:%M')
+    fecha_fin_t = tarea[4].strftime('%Y-%m-%d')
 
     data = {
         'tarea': tarea,
@@ -206,9 +206,9 @@ def exportar_tarea(request, id):
     db = Database()
     tarea = db.get_tarea(id)
 
-    fecha_inicio_t = tarea[4].strftime('%Y-%m-%d')
-    hora_inicio_t = tarea[4].strftime('%H:%M')
-    fecha_fin_t = tarea[5].strftime('%Y-%m-%d')
+    fecha_inicio_t = tarea[3].strftime('%Y-%m-%d')
+    hora_inicio_t = tarea[3].strftime('%H:%M')
+    fecha_fin_t = tarea[4].strftime('%Y-%m-%d')
 
     objeto_tarea = Tarea(tarea[1],tarea[2],tarea[3],fecha_inicio_t + ' ' + hora_inicio_t,fecha_fin_t)
     objeto_tarea = objeto_tarea.__dict__

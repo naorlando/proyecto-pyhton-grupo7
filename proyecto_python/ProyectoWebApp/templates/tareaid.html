@@ -23,22 +23,22 @@
       <div class="col-md-4">
         <div class="input-group">
           <span class="input-group-text">Prioridad</span>
-          <input type="text" readonly class="form-control" name="prioridad" value="{{ tarea.2 }}">
+          <input type="text" readonly class="form-control" name="prioridad" value="{{ tarea.6 }}">
         </div>
       </div>
       <div class="col-md-12 my-4">
-        <textarea type="text" readonly class="form-control" name="descripcion" rows="4" maxlength="250">{{ tarea.3 }}</textarea>
+        <textarea type="text" readonly class="form-control" name="descripcion" rows="4" maxlength="250">{{ tarea.2 }}</textarea>
       </div>
       <div class="mb-3 row">
         <label for="staticEmail" class="col-sm-2 col-form-label">Fecha inicio</label>
         <div class="col-sm-10">
-          <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{ tarea.4 }}">
+          <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{ tarea.3|date }}">
         </div>
       </div>
       <div class="mb-3 row">
         <label for="staticEmail" class="col-sm-2 col-form-label">Fecha finalizacion</label>
         <div class="col-sm-10">
-          <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{ tarea.5 }}">
+          <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{ tarea.4|date }}">
         </div>
       </div>
         <div class="d-grid d-md-flex justify-content-md-end my-4">
