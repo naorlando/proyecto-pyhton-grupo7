@@ -7,11 +7,12 @@
 
 <div class="container my-4 border rounded shadow">
   <div class="row mx-5 mt-4">
-    <div class="col-md-8">
-      <h1>MODIFICAR TAREA</h1>
+    <div class="col-8">
+      <h1 class="text-dark display-7">Modificar {{ tarea.1 }} </h1>
     </div>
     <hr>
   </div>
+  {% if user.is_authenticated %}
     <form class="row mx-5 my-3" action="" method="POST">
       {% csrf_token %}
         <div class="col-md-6">
@@ -24,7 +25,7 @@
           <div class="input-group">
             <span class="input-group-text">Prioridad</span>
             <select class="form-select" name="prioridad">
-              <option selected>{{ tarea.2 }}</option>
+              <option selected>{{ prioridad_t }}</option>
               <option>Alta</option>
               <option>Media</option>
               <option>Baja</option>
@@ -32,7 +33,7 @@
           </div>
         </div>
         <div class="col-md-12 my-4">
-          <textarea type="text" class="form-control" name="descripcion" rows="4" maxlength="250" required>{{ tarea.3 }}</textarea>
+          <textarea type="text" class="form-control" name="descripcion" rows="4" maxlength="250" required>{{ tarea.2 }}</textarea>
           <div id="emailHelp" class="form-text">Descripción de hasta 250 caracteres.</div>
         </div>
         <div class="col-md-3 mb-3">
@@ -51,6 +52,9 @@
           <button type="submit" class="btn btn-success btn-lg text-white shadow">Guardar Cambios</button>
         </div>
   </form>
+  {% else %}
+  <h2 class="row mx-5 my-3" >Debes iniciar sesion para ver esta pestania</h2>
+  {% endif %}
 </div>
 
 {% endblock %}

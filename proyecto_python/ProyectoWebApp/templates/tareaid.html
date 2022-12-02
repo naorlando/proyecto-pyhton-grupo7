@@ -5,10 +5,10 @@
 
 {% block content %}
 
-<div class="container my-4 border rounded shadow">
+<div class="container my-4 border rounded shadow ">
   <div class="row mx-5 mt-4">
-    <div class="col-md-8">
-      <h1>{{ tarea.1 }}</h1>
+    <div class="col-8">
+      <h1 class="text-dark display-7">{{ tarea.1 }}</h1>
     </div>
     <hr>
   </div>
@@ -23,27 +23,29 @@
       <div class="col-md-4">
         <div class="input-group">
           <span class="input-group-text">Prioridad</span>
-          <input type="text" readonly class="form-control" name="prioridad" value="{{ tarea.2 }}">
+          <input type="text" readonly class="form-control" name="prioridad" value="{{ prioridad_t }}">
         </div>
       </div>
       <div class="col-md-12 my-4">
-        <textarea type="text" readonly class="form-control" name="descripcion" rows="4" maxlength="250">{{ tarea.3 }}</textarea>
+        <textarea type="text" readonly class="form-control" name="descripcion" rows="4" maxlength="250">{{ tarea.2 }}</textarea>
       </div>
       <div class="mb-3 row">
         <label for="staticEmail" class="col-sm-2 col-form-label">Fecha inicio</label>
         <div class="col-sm-10">
-          <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{ tarea.4 }}">
+          <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{ tarea.3|date }}">
         </div>
       </div>
       <div class="mb-3 row">
         <label for="staticEmail" class="col-sm-2 col-form-label">Fecha finalizacion</label>
         <div class="col-sm-10">
-          <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{ tarea.5 }}">
+          <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{ tarea.4|date }}">
         </div>
       </div>
         <div class="d-grid d-md-flex justify-content-md-end my-4">
+          {% if user.is_authenticated %}
           <a href="{% url 'ModificarTarea' tarea.0 %}" class="btn btn-dark btn-md text-white shadow mx-2">Modificar</a>
           <a href="{% url 'ExportarTarea' tarea.0  %}" class="btn btn-outline-dark btn-md shadow">Exportar</a>
+          {% endif %}
         </div>
   </form>
 </div>

@@ -1,4 +1,8 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.models import User
+from django.contrib.auth import login, logout, authenticate
+from django.db import IntegrityError
 from datetime import datetime
 from django.core.paginator import Paginator
 from django.http import Http404, HttpResponse
@@ -9,6 +13,53 @@ import json
 
 def home(request):
     return render(request, 'home.html')
+
+def signup(request):
+
+    if request.method == 'GET':
+        return render(request, 'signup.html', {
+            'form': UserCreationForm
+        })
+    else:
+        if request.POST['password1'] == request.POST['password2']:
+            # registrar usuario
+            try:
+                user = User.objects.create_user(
+                    username=request.POST['username'], password=request.POST['password1'])
+                user.save()
+                login(request, user)
+                return redirect('Tareas')
+            # manejo el error integrity (sacando el try catch podemos ver el error)
+            except IntegrityError:
+                return render(request, 'signup.html', {
+                    'form': UserCreationForm,
+                    'error': 'Username already exists'
+                })
+        return render(request, 'signup.html', {
+            'form': UserCreationForm,
+            'error': 'Passwords does not match'
+        })
+
+def signin(request):
+    if request.method == 'GET':
+        return render(request, 'signin.html', {
+            'form': AuthenticationForm
+        })
+    else:
+        user = authenticate(
+            request, username=request.POST['username'], password=request.POST['password'])
+        if user is None:
+            return render(request, 'signin.html', {
+            'form': AuthenticationForm,
+            'error':'Username or password is incorrect'
+        })
+        else:
+            login(request,user)
+            return redirect('Tareas')
+
+def signout(request):
+    logout(request)
+    return redirect('Home')
 
 def listar_tareas(request):
     db = Database()
@@ -32,12 +83,13 @@ def modificar_tarea(request, id):
     tarea = db.get_tarea(id)
     # prod = Item.objects.get(idproducto = id)
 
-    fecha_inicio_t = tarea[4].strftime('%Y-%m-%d')
-    hora_inicio_t = tarea[4].strftime('%H:%M')
-    fecha_fin_t = tarea[5].strftime('%Y-%m-%d')
+    fecha_inicio_t = tarea[3].strftime('%Y-%m-%d')
+    hora_inicio_t = tarea[3].strftime('%H:%M')
+    fecha_fin_t = tarea[4].strftime('%Y-%m-%d')
 
     data = {
         'tarea': tarea,
+        'prioridad_t': convertir_prioridad(tarea[6]),
         'fecha_inicio_t': fecha_inicio_t,
         'hora_inicio_t': hora_inicio_t,
         'fecha_fin_t': fecha_fin_t
@@ -132,12 +184,13 @@ def tarea_id(request, id):
     tarea = db.get_tarea(id)
     # prod = Item.objects.get(idproducto = id)
 
-    fecha_inicio_t = tarea[4].strftime('%Y-%m-%d')
-    hora_inicio_t = tarea[4].strftime('%H:%M')
-    fecha_fin_t = tarea[5].strftime('%Y-%m-%d')
+    fecha_inicio_t = tarea[3].strftime('%Y-%m-%d')
+    hora_inicio_t = tarea[3].strftime('%H:%M')
+    fecha_fin_t = tarea[4].strftime('%Y-%m-%d')
 
     data = {
         'tarea': tarea,
+        'prioridad_t': convertir_prioridad(tarea[6]),
         'fecha_inicio_t': fecha_inicio_t,
         'hora_inicio_t': hora_inicio_t,
         'fecha_fin_t': fecha_fin_t
@@ -149,9 +202,9 @@ def exportar_tarea(request, id):
     db = Database()
     tarea = db.get_tarea(id)
 
-    fecha_inicio_t = tarea[4].strftime('%Y-%m-%d')
-    hora_inicio_t = tarea[4].strftime('%H:%M')
-    fecha_fin_t = tarea[5].strftime('%Y-%m-%d')
+    fecha_inicio_t = tarea[3].strftime('%Y-%m-%d')
+    hora_inicio_t = tarea[3].strftime('%H:%M')
+    fecha_fin_t = tarea[4].strftime('%Y-%m-%d')
 
     objeto_tarea = Tarea(tarea[1],tarea[2],tarea[3],fecha_inicio_t + ' ' + hora_inicio_t,fecha_fin_t)
     objeto_tarea = objeto_tarea.__dict__
@@ -173,3 +226,14 @@ def exportar_tarea(request, id):
     remove('ProyectoWebApp/static/data.json')
 
     return response
+
+
+
+
+def convertir_prioridad(value):
+    if value == 1:
+        return 'Alta'
+    if value == 2:
+        return 'Media'
+    if value == 3:
+        return 'Baja'

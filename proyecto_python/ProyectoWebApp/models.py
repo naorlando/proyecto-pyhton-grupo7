@@ -18,8 +18,8 @@ class Database():
         self.connection = pymysql.connect(
         host='localhost',
         user='root',
-        password='',
-        db='python-utn'
+        password='1234',
+        db='usuariospython'
     ) 
     #chequeo que la bbdd este en funcionamiento, sino no se conecta
     #y lanza un error (no llega al print)
@@ -60,8 +60,8 @@ class Database():
             raise
 
     def update_tarea(self, ide, nombre_tarea_m, prioridad_m, descripcion_m, fecha_inicio_m, fecha_fin_m):
-        query = "UPDATE tareas SET nombre_tarea = '{}', prioridad = '{}', descripcion = '{}', fecha_inicio = '{}',\
-        fecha_fin = '{}' WHERE idtarea = '{}'".format(nombre_tarea_m, prioridad_m, descripcion_m, fecha_inicio_m, fecha_fin_m, ide)
+        query = "UPDATE tareas SET nombre_tarea = '{}',prioridad_idprioridad = (SELECT idprioridad FROM prioridad WHERE nombre_prioridad='{}'), descripcion = '{}',\
+        fecha_fin = '{}' WHERE idtarea = '{}'".format(nombre_tarea_m, prioridad_m, descripcion_m, fecha_fin_m, ide)
 
         try:
             self.cursor.execute(query)
@@ -73,8 +73,8 @@ class Database():
     
 
     def create_tarea(self, nombre_tarea_m, prioridad_m, descripcion_m, fecha_inicio_m, fecha_fin_m):
-        query="INSERT INTO tareas(nombre_tarea, prioridad, descripcion, fecha_inicio, fecha_fin)\
-        VALUES ('{}','{}','{}','{}','{}')".format(nombre_tarea_m, prioridad_m, descripcion_m, fecha_inicio_m, fecha_fin_m)
+        query="INSERT INTO tareas(nombre_tarea, prioridad_idprioridad, descripcion, fecha_fin,auth_user_id)\
+        VALUES ('{}',(SELECT idprioridad FROM prioridad WHERE nombre_prioridad='{}'),'{}','{}','{}')".format(nombre_tarea_m,prioridad_m , descripcion_m, fecha_fin_m,"3")
         
         try:
             self.cursor.execute(query)
@@ -94,3 +94,4 @@ class Database():
     
     def close(self):
         self.connection.close()
+

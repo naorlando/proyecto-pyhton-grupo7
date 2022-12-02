@@ -8,7 +8,7 @@
 <div class="container p-0">
   <div class="row">
     <div class="col">
-      <h1>TAREAS</h1>
+      <h1 class="text-center display-3 py-3">TAREAS</h1>
     </div>
   </div>
   <hr>
@@ -19,10 +19,10 @@
       <a href="{% url 'VerTarea' tarea.0 %}">
         <div class="card-tarea card shadow" id="card-tareas">
           <div class="card-body">
-            <h5 class="card-title text-dark">{{tarea.1}}</h5>
+            <h5 class="text-center display-7 card-title text-dark">{{tarea.1}}</h5>
             <hr class="text-dark">
             <p class="card-text text-dark m-0">Prioridad: {{tarea.2}}</p>
-            <p class="card-text text-dark m-0">Fecha limite: {{tarea.5|date}}</p>
+            <p class="card-text text-dark m-0">Fecha limite: {{tarea.4|date}}</p>
             <a href="{% url 'EliminarTarea' tarea.0 %}" class="btn btn-outline-danger mt-3">Archivar(hay q cambiarlo)</a>
           </div>
         </div>
