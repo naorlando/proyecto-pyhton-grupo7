@@ -60,8 +60,8 @@ class Database():
             raise
 
     def update_tarea(self, ide, nombre_tarea_m, prioridad_m, descripcion_m, fecha_inicio_m, fecha_fin_m):
-        query = "UPDATE tareas SET nombre_tarea = '{}', prioridad = '{}', descripcion = '{}', fecha_inicio = '{}',\
-        fecha_fin = '{}' WHERE idtarea = '{}'".format(nombre_tarea_m, prioridad_m, descripcion_m, fecha_inicio_m, fecha_fin_m, ide)
+        query = "UPDATE tareas SET nombre_tarea = '{}',prioridad_idprioridad = (SELECT idprioridad FROM prioridad WHERE nombre_prioridad='{}'), descripcion = '{}',\
+        fecha_fin = '{}' WHERE idtarea = '{}'".format(nombre_tarea_m, prioridad_m, descripcion_m, fecha_fin_m, ide)
 
         try:
             self.cursor.execute(query)

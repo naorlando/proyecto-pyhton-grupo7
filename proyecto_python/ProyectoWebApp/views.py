@@ -92,6 +92,7 @@ def modificar_tarea(request, id):
 
     data = {
         'tarea': tarea,
+        'prioridad_t': convertir_prioridad(tarea[6]),
         'fecha_inicio_t': fecha_inicio_t,
         'hora_inicio_t': hora_inicio_t,
         'fecha_fin_t': fecha_fin_t
@@ -195,6 +196,7 @@ def tarea_id(request, id):
 
     data = {
         'tarea': tarea,
+        'prioridad_t': convertir_prioridad(tarea[6]),
         'fecha_inicio_t': fecha_inicio_t,
         'hora_inicio_t': hora_inicio_t,
         'fecha_fin_t': fecha_fin_t
@@ -221,3 +223,14 @@ def exportar_tarea(request, id):
     jsonFile.close()
 
     return redirect('/tareas/' + str(id))
+
+
+
+
+def convertir_prioridad(value):
+    if value == 1:
+        return 'Alta'
+    if value == 2:
+        return 'Media'
+    if value == 3:
+        return 'Baja'
