@@ -40,7 +40,6 @@ class Database():
 
     def get_tarea(self, ide):
         query = "SELECT * FROM tareas WHERE idtarea = '{}'".format(ide)
-
         try:
             self.cursor.execute(query)
             task = self.cursor.fetchone()
@@ -52,7 +51,6 @@ class Database():
 
     def get_tareas_x_prioridad(self, prioridad_m):
         query = "SELECT * FROM tareas WHERE prioridad = '{}'".format(prioridad_m)
-        
         try:
             self.cursor.execute(query)
             tasks = self.cursor.fetchall()

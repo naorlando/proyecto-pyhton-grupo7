@@ -227,9 +227,6 @@ def exportar_tarea(request, id):
 
     return response
 
-
-
-
 def convertir_prioridad(value):
     if value == 1:
         return 'Alta'
