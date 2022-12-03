@@ -63,7 +63,7 @@ class Database():
             raise
 
     def get_user (self,id):
-        query = "SELECT username FROM auth_user WHERE id='{}'"
+        query = "SELECT username FROM auth_user WHERE id = '{}'".format(id)
 
         try:
             self.cursor.execute(query)

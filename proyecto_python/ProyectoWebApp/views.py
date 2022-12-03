@@ -203,6 +203,7 @@ def tarea_id(request, id):
     fecha_inicio_t = tarea[3].strftime('%Y-%m-%d')
     hora_inicio_t = tarea[3].strftime('%H:%M')
     fecha_fin_t = tarea[4].strftime('%Y-%m-%d')
+    usuario = db.get_user(tarea[7])
 
     data = {
         'tarea': tarea,
@@ -210,7 +211,8 @@ def tarea_id(request, id):
         'estado': convertir_estado(tarea[5]),
         'fecha_inicio_t': fecha_inicio_t,
         'hora_inicio_t': hora_inicio_t,
-        'fecha_fin_t': fecha_fin_t
+        'fecha_fin_t': fecha_fin_t,
+        'usuario': usuario
     }
 
     return render(request, 'tareaid.html', data)
