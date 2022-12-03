@@ -79,6 +79,23 @@ def listar_tareas(request):
 
     return render(request, 'tareas.html', {'tareas': info, 'paginado': paginado})
 
+def listar_tareas_archivadas(request):
+    db = Database()
+    info = db.tareas_archivadas()
+
+    # for user in info:
+    #     print(user[1])
+
+    nro_pagina = request.GET.get('page', 1)
+
+    try:
+        paginado = Paginator(info, 6)
+        info = paginado.page(nro_pagina)
+    except:
+        raise Http404
+
+    return render(request, 'tareas.html', {'tareas': info, 'paginado': paginado})
+
 def modificar_tarea(request, id):
     db = Database()
     tarea = db.get_tarea(id)
@@ -122,6 +139,34 @@ def modificar_estado(request, id, estado):
     except:
 
         print('Error al modificar el estado de la tarea')
+        return redirect('/home')
+
+    return redirect('/tareas/' + str(id))
+
+
+def archivar_tarea(request, id):
+
+    try:
+
+        db = Database()
+        db.archivar_tarea(id)
+
+    except:
+
+        print('Error al archivar la tarea')
+        return redirect('/home')
+
+    return redirect('/tareas/' + str(id))
+def desarchivar_tarea(request, id):
+
+    try:
+
+        db = Database()
+        db.desarchivar_tarea(id)
+
+    except:
+
+        print('Error al desarchivar la tarea')
         return redirect('/home')
 
     return redirect('/tareas/' + str(id))
@@ -207,6 +252,7 @@ def tarea_id(request, id):
 
     data = {
         'tarea': tarea,
+        'archivado' : tarea[8],
         'prioridad': convertir_prioridad(tarea[6]),
         'estado': convertir_estado(tarea[5]),
         'fecha_inicio_t': fecha_inicio_t,

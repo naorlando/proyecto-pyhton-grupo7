@@ -21,7 +21,7 @@ class Database():
         self.connection = pymysql.connect(
         host='localhost',
         user='root',
-        password='',
+        password='1234',
         db='usuariospython'
     ) 
     #chequeo que la bbdd este en funcionamiento, sino no se conecta
@@ -31,7 +31,15 @@ class Database():
     
     #METODOS
     def all_task (self):
-        query ='SELECT * FROM tareas'
+        query ='SELECT * FROM tareas WHERE archivado=0 ORDER BY prioridad_idprioridad AND fecha_fin'
+
+        self.cursor.execute(query)
+        tareas=self.cursor.fetchall()
+        tareas=list(tareas)
+        return tareas
+
+    def tareas_archivadas (self):
+        query ='SELECT * FROM tareas WHERE archivado=1 ORDER BY prioridad_idprioridad AND fecha_fin'
 
         self.cursor.execute(query)
         tareas=self.cursor.fetchall()
@@ -96,6 +104,28 @@ class Database():
 
         except Exception as e:
             print("Error al modificar el estado de la tarea")
+            raise
+
+    def archivar_tarea(self, id):
+        query = "UPDATE tareas SET archivado = '1' WHERE idtarea = '{}'".format(id)
+
+        try:
+            self.cursor.execute(query)
+            self.connection.commit()
+
+        except Exception as e:
+            print("Error al archivar la tarea")
+            raise
+
+    def desarchivar_tarea(self, id):
+        query = "UPDATE tareas SET archivado = '0' WHERE idtarea = '{}'".format(id)
+
+        try:
+            self.cursor.execute(query)
+            self.connection.commit()
+
+        except Exception as e:
+            print("Error al desarchivar la tarea")
             raise
 
     def create_tarea(self, nombre_tarea_m, prioridad_m, descripcion_m, fecha_inicio_m, fecha_fin_m,username_m):

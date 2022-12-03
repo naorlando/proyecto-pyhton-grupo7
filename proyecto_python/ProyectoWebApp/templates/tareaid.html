@@ -55,6 +55,14 @@
               <li><a class="dropdown-item" href="{% url 'ModificarEstado' tarea.0 3 %}">Finalizada</a></li>
             </ul>
           </div>
+          <div class="row-cols-md-3 mt-4">
+            {% if archivado == 1 %}
+            <a href="{% url 'DesarchivarTarea' tarea.0 %}" class="btn btn-warning btn-md text-white shadow mx-2">Desarchivar</a>
+            {% else %}
+            <a href="{% url 'ArchivarTarea' tarea.0 %}" class="btn btn-warning btn-md text-white shadow mx-2">Archivar</a>
+            {% endif %}
+          </div>
+          <p class="display-7">CUIDADO: Si se archiva una tarea, no se listara</p>
         </div>
         {% else %}
         <div class="col-md-4">
