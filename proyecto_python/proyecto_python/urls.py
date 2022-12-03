@@ -25,6 +25,7 @@ urlpatterns = [
     path('signin/',views.signin, name='signin'),
     path('logout/',views.signout, name='logout'),
     path('tareas/modificar/<int:id>',views.modificar_tarea,name='ModificarTarea'),
+    path('tareas/modificar-estado/<int:id>/<int:estado>',views.modificar_estado,name='ModificarEstado'),
     path('tareas/crear',views.crear_tarea,name='CrearTarea'),
     path('tareas/eliminar/<int:id>',views.eliminar_tarea,name='EliminarTarea'),
     path('tareas/<int:id>',views.tarea_id,name='VerTarea'),

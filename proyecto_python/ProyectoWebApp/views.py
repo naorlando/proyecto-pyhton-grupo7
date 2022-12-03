@@ -8,6 +8,7 @@ from django.core.paginator import Paginator
 from django.http import Http404, HttpResponse
 from .models import Database, Tarea
 from .forms import TareaJsonForm
+from .funciones import *
 from os import remove
 import json
 
@@ -81,7 +82,6 @@ def listar_tareas(request):
 def modificar_tarea(request, id):
     db = Database()
     tarea = db.get_tarea(id)
-    # prod = Item.objects.get(idproducto = id)
 
     fecha_inicio_t = tarea[3].strftime('%Y-%m-%d')
     hora_inicio_t = tarea[3].strftime('%H:%M')
@@ -112,6 +112,20 @@ def modificar_tarea(request, id):
 
     return render(request, 'modificartarea.html', data)
 
+def modificar_estado(request, id, estado):
+
+    try:
+
+        db = Database()
+        db.update_estado_tarea(id, estado)
+
+    except:
+
+        print('Error al modificar el estado de la tarea')
+        return redirect('/home')
+
+    return redirect('/tareas/' + str(id))
+
 def crear_tarea(request):
     db = Database()
     form = TareaJsonForm()
@@ -138,14 +152,15 @@ def crear_tarea(request):
             # Transformama el json leido a un diccionario, lo recorre y almacena cada valor
             try:
                 data = json.loads(tareas)
+                username_m = request.user.username
                 for i in data:
                     nombre_tarea_m = i['nombre_tarea']
-                    prioridad_m = i['prioridad']
                     descripcion_m = i['descripcion']
                     fecha_inicio_m = i['fecha_inicio']
                     fecha_fin_m = i['fecha_fin']
+                    prioridad_m = i['prioridad']
                     db.create_tarea(nombre_tarea_m, prioridad_m,
-                                    descripcion_m, fecha_inicio_m, fecha_fin_m)
+                                    descripcion_m, fecha_inicio_m, fecha_fin_m, username_m)
 
                 # Elimina el archivo
                 remove('ProyectoWebApp/static/data.json')
@@ -153,6 +168,7 @@ def crear_tarea(request):
                 return redirect('/tareas')
 
             except:
+                print('Error al crear tarea mediante archivo JSON')
                 return redirect('/')
 
         # En caso de utilizar el formulario manual
@@ -187,13 +203,16 @@ def tarea_id(request, id):
     fecha_inicio_t = tarea[3].strftime('%Y-%m-%d')
     hora_inicio_t = tarea[3].strftime('%H:%M')
     fecha_fin_t = tarea[4].strftime('%Y-%m-%d')
+    usuario = db.get_user(tarea[7])
 
     data = {
         'tarea': tarea,
-        'prioridad_t': convertir_prioridad(tarea[6]),
+        'prioridad': convertir_prioridad(tarea[6]),
+        'estado': convertir_estado(tarea[5]),
         'fecha_inicio_t': fecha_inicio_t,
         'hora_inicio_t': hora_inicio_t,
-        'fecha_fin_t': fecha_fin_t
+        'fecha_fin_t': fecha_fin_t,
+        'usuario': usuario
     }
 
     return render(request, 'tareaid.html', data)
@@ -206,7 +225,11 @@ def exportar_tarea(request, id):
     hora_inicio_t = tarea[3].strftime('%H:%M')
     fecha_fin_t = tarea[4].strftime('%Y-%m-%d')
 
-    objeto_tarea = Tarea(tarea[1],tarea[2],tarea[3],fecha_inicio_t + ' ' + hora_inicio_t,fecha_fin_t)
+    prioridad = convertir_prioridad(tarea[6])
+    estado = convertir_estado(tarea[5])
+    # usuario = db.get_user(tarea[7])
+
+    objeto_tarea = Tarea(tarea[1],tarea[2],fecha_inicio_t + ' ' + hora_inicio_t,fecha_fin_t,estado,prioridad,tarea[7])
     objeto_tarea = objeto_tarea.__dict__
 
     tarea_json = json.dumps(objeto_tarea)
@@ -227,13 +250,3 @@ def exportar_tarea(request, id):
 
     return response
 
-
-
-
-def convertir_prioridad(value):
-    if value == 1:
-        return 'Alta'
-    if value == 2:
-        return 'Media'
-    if value == 3:
-        return 'Baja'
