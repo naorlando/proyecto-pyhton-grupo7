@@ -41,6 +41,8 @@
         </div>
       </div>
       <div class="row">
+
+        {% if user.is_authenticated %}
         <div class="col-md-4">
           <span>Estado Actual: </span>
           <div class="btn-group border dropend mx-3">
@@ -54,6 +56,12 @@
             </ul>
           </div>
         </div>
+        {% else %}
+        <div class="col-md-4">
+            <p>Estado Actual: {{ estado }}</p>
+        </div>
+        {% endif %}
+
       </div>
 
       <div class="d-grid d-md-flex justify-content-md-end my-4">
