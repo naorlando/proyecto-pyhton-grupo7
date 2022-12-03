@@ -227,9 +227,9 @@ def exportar_tarea(request, id):
 
     prioridad = convertir_prioridad(tarea[6])
     estado = convertir_estado(tarea[5])
-    # usuario = db.get_user(tarea[7])
+    usuario = db.get_user(tarea[7])
 
-    objeto_tarea = Tarea(tarea[1],tarea[2],fecha_inicio_t + ' ' + hora_inicio_t,fecha_fin_t,estado,prioridad,tarea[7])
+    objeto_tarea = Tarea(tarea[1],tarea[2],fecha_inicio_t + ' ' + hora_inicio_t,fecha_fin_t,estado,prioridad,usuario[0])
     objeto_tarea = objeto_tarea.__dict__
 
     tarea_json = json.dumps(objeto_tarea)
