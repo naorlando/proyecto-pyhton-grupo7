@@ -114,16 +114,16 @@ def modificar_tarea(request, id):
 
     if request.method == "POST":
 
+        username_m = request.user.username
         fecha_inicio_aux = request.POST.get('fecha_inicio')
         hora_inicio_aux = request.POST.get('hora_inicio')
-
         nombre_tarea_m = request.POST.get('nombre')
         prioridad_m = request.POST.get('prioridad')
         descripcion_m = request.POST.get('descripcion')
         fecha_inicio_m = fecha_inicio_aux + ' ' + hora_inicio_aux
         fecha_fin_m = request.POST.get('fecha_fin')
         db.update_tarea(id, nombre_tarea_m, prioridad_m,
-                        descripcion_m, fecha_inicio_m, fecha_fin_m)
+                        descripcion_m, fecha_inicio_m, fecha_fin_m,username_m)
 
         return redirect('/tareas')
 
