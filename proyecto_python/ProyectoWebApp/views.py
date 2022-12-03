@@ -81,7 +81,6 @@ def listar_tareas(request):
 def modificar_tarea(request, id):
     db = Database()
     tarea = db.get_tarea(id)
-    # prod = Item.objects.get(idproducto = id)
 
     fecha_inicio_t = tarea[3].strftime('%Y-%m-%d')
     hora_inicio_t = tarea[3].strftime('%H:%M')

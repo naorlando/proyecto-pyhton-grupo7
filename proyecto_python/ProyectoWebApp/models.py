@@ -18,7 +18,7 @@ class Database():
         self.connection = pymysql.connect(
         host='localhost',
         user='root',
-        password='1234',
+        password='',
         db='usuariospython'
     ) 
     #chequeo que la bbdd este en funcionamiento, sino no se conecta
@@ -60,8 +60,9 @@ class Database():
             raise
 
     def update_tarea(self, ide, nombre_tarea_m, prioridad_m, descripcion_m, fecha_inicio_m, fecha_fin_m):
-        query = "UPDATE tareas SET nombre_tarea = '{}',prioridad_idprioridad = (SELECT idprioridad FROM prioridad WHERE nombre_prioridad='{}'), descripcion = '{}',\
-        fecha_fin = '{}' WHERE idtarea = '{}'".format(nombre_tarea_m, prioridad_m, descripcion_m, fecha_fin_m, ide)
+        query = "UPDATE tareas SET nombre_tarea = '{}', descripcion = '{}', fecha_inicio = '{}',\
+            fecha_fin = '{}', prioridad_idprioridad = (SELECT idprioridad FROM prioridad WHERE nombre_prioridad='{}')\
+            WHERE idtarea = '{}'".format(nombre_tarea_m, descripcion_m, fecha_inicio_m, fecha_fin_m, prioridad_m, ide)
 
         try:
             self.cursor.execute(query)
@@ -70,11 +71,11 @@ class Database():
         except Exception as e:
             print("Error al modificar la tarea")
             raise
-    
 
     def create_tarea(self, nombre_tarea_m, prioridad_m, descripcion_m, fecha_inicio_m, fecha_fin_m,username_m):
-        query="INSERT INTO tareas(nombre_tarea, prioridad_idprioridad, descripcion, fecha_fin,auth_user_id)\
-        VALUES ('{}',(SELECT idprioridad FROM prioridad WHERE nombre_prioridad='{}'),'{}','{}',(SELECT id FROM auth_user WHERE username='{}'))".format(nombre_tarea_m,prioridad_m , descripcion_m, fecha_fin_m,username_m)
+        query="INSERT INTO tareas(nombre_tarea, descripcion, fecha_inicio, fecha_fin, prioridad_idprioridad, auth_user_id)\
+            VALUES ('{}','{}','{}','{}',(SELECT idprioridad FROM prioridad WHERE nombre_prioridad='{}'),\
+            (SELECT id FROM auth_user WHERE username='{}'))".format(nombre_tarea_m, descripcion_m, fecha_inicio_m, fecha_fin_m, prioridad_m, username_m)
         
         try:
             self.cursor.execute(query)
