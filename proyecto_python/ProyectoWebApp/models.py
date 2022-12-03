@@ -4,12 +4,15 @@ import datetime as d
 
 #definimos la clase Tarea
 class Tarea():
-    def __init__(self, nombre_tarea, prioridad, descripcion, fecha_inicio, fecha_fin):
+    def __init__(self, nombre_tarea, descripcion, fecha_inicio, fecha_fin, estado, prioridad, usuario):
         self.nombre_tarea = nombre_tarea
-        self.prioridad = prioridad
         self.descripcion = descripcion
         self.fecha_inicio = fecha_inicio
         self.fecha_fin = fecha_fin
+        self.estado = estado
+        self.prioridad = prioridad
+        self.usuario = usuario
+
 
 #definimos la clase de nuestra Base de datos
 class Database():
@@ -57,6 +60,18 @@ class Database():
 
         except Exception as e:
             print("Error al obtener las tareas segun su prioridad")
+            raise
+
+    def get_user (self,id):
+        query = "SELECT username FROM auth_user WHERE id='{}'"
+
+        try:
+            self.cursor.execute(query)
+            username = self.cursor.fetchone()
+            return username
+
+        except Exception as e:
+            print("El usuario no existe")
             raise
 
     def update_tarea(self, ide, nombre_tarea_m, prioridad_m, descripcion_m, fecha_inicio_m, fecha_fin_m):
