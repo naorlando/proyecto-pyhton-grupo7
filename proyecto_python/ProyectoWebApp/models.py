@@ -87,6 +87,17 @@ class Database():
             print("Error al modificar la tarea")
             raise
 
+    def update_estado_tarea(self, id, estado):
+        query = "UPDATE tareas SET estado_idestado = '{}' WHERE idtarea = '{}'".format(estado,id)
+
+        try:
+            self.cursor.execute(query)
+            self.connection.commit()
+
+        except Exception as e:
+            print("Error al modificar el estado de la tarea")
+            raise
+
     def create_tarea(self, nombre_tarea_m, prioridad_m, descripcion_m, fecha_inicio_m, fecha_fin_m,username_m):
         query="INSERT INTO tareas(nombre_tarea, descripcion, fecha_inicio, fecha_fin, prioridad_idprioridad, auth_user_id)\
             VALUES ('{}','{}','{}','{}',(SELECT idprioridad FROM prioridad WHERE nombre_prioridad='{}'),\

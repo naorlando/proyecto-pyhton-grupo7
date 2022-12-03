@@ -112,6 +112,20 @@ def modificar_tarea(request, id):
 
     return render(request, 'modificartarea.html', data)
 
+def modificar_estado(request, id, estado):
+
+    try:
+
+        db = Database()
+        db.update_estado_tarea(id, estado)
+
+    except:
+
+        print('Error al modificar el estado de la tarea')
+        return redirect('/home')
+
+    return redirect('/tareas/' + str(id))
+
 def crear_tarea(request):
     db = Database()
     form = TareaJsonForm()
@@ -192,7 +206,8 @@ def tarea_id(request, id):
 
     data = {
         'tarea': tarea,
-        'prioridad_t': convertir_prioridad(tarea[6]),
+        'prioridad': convertir_prioridad(tarea[6]),
+        'estado': convertir_estado(tarea[5]),
         'fecha_inicio_t': fecha_inicio_t,
         'hora_inicio_t': hora_inicio_t,
         'fecha_fin_t': fecha_fin_t
