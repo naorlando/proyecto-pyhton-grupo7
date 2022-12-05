@@ -118,7 +118,6 @@ while True:
         imgAdaptativeThre = paperProcessing(imgWarped)
         imageArray = ([imgThres,imgContour],
                [imgWarped,imgAdaptativeThre])
-        cv.imwrite('tarea.jpg',imgAdaptativeThre)
     else:
         imageArray=([img,imgContour],
             [imgThres,img])
@@ -129,6 +128,7 @@ while True:
 
     cv.imshow("Result",stackedImages)
     if cv.waitKey(1) & 0xFF == ord ('q'):
+        cv.imwrite('proyecto_python/tarea.jpg',imgAdaptativeThre)
         break
 
 
