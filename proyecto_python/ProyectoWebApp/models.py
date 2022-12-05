@@ -31,7 +31,7 @@ class Database():
     
     #METODOS
     def all_task (self):
-        query ='SELECT * FROM tareas WHERE archivado=0 ORDER BY prioridad_idprioridad AND fecha_fin'
+        query ='SELECT * FROM tareas WHERE archivado=0 ORDER BY prioridad_idprioridad AND fecha_fin ASC'
 
         self.cursor.execute(query)
         tareas=self.cursor.fetchall()
