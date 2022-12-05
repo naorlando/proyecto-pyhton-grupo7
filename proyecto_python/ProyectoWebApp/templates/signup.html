@@ -2,11 +2,12 @@
 
 {% block content %}
 
-<main class="container">
+<main class="container my-4">
     <div class="row">
         <div class="col-md-4 offset-md-4">
-            <form action="/signup/" method="POST" class="card card-body mt-5">
-                <h1 class="text-center">Sign-up</h1>
+            <form action="/signup/" method="POST" class="card card-body shadow mt-5">
+                <h1 class="text-center mb-3">Sign-up</h1>
+                <hr>
                 
                 {{error}}
                 {% csrf_token %}
@@ -14,22 +15,24 @@
                 <div class="mb-3">
                     <label for="username">Username:</label>
                     <input type="text" name="username" id="username" class="form-control"
-                    placeholder="Write your username">
+                    placeholder="Escribí tu username..." required>
                 </div>
                 <div class="mb-3">
                     <label for="password1">Password:</label>
                     <input type="password" name="password1" id="password1" class="form-control"
-                    placeholder="Write your passowrd">
+                    placeholder="Escribí tu password..." required>
                 </div>
                 <div class="mb-3">
-                    <label for="password2">Confirm your password:</label>
+                    <label for="password2">Confirma tu password:</label>
                     <input type="password" name="password2" id="password2" class="form-control"
-                    placeholder="Confirm your password">
+                    placeholder="Confirma tu password..." required>
                 </div>
-            
-                <button class="btn btn-dark">
-                    Sign-up
-                </button>
+                
+                <div class="d-grid d-md-flex justify-content-md-center my-3">
+                    <button class="btn btn-dark border rounded-pill shadow px-4 mt-3">
+                        Crear Usuario
+                    </button>
+                </div>
             
             </form>
         </div>
