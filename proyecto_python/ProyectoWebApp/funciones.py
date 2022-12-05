@@ -18,12 +18,17 @@ def convertir_estado(value):
         return 'Finalizado'
 
 
-frameWidth = 1280
-frameHeight = 720
-cap = cv.VideoCapture(0,cv.CAP_DSHOW)
-cap.set(3,frameWidth)
-cap.set(4,frameHeight)
-cap.set(10,150)
+
+
+
+# Funciones para trabajar con webcam
+
+# frameWidth = 1280
+# frameHeight = 720
+# cap = cv.VideoCapture(0,cv.CAP_DSHOW)
+# cap.set(3,frameWidth)
+# cap.set(4,frameHeight)
+# cap.set(10,150)
 
 
 
@@ -68,7 +73,7 @@ def reorder(myPoints):
     return myPointsNew
 
 
-def getWarp(img,biggest):
+def getWarp(img, biggest, frameWidth, frameHeight):
     biggest = reorder(biggest)
     # pts0 = np.float32([[357, 59], [117, 66], [171, 455], [417, 389]])
     pts1 = np.float32(biggest)

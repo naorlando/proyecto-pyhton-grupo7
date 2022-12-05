@@ -252,6 +252,7 @@ def crear_tarea(request):
 
 def scanner(request):
     
+    db = Database()
     
     frameWidth = 1280
     frameHeight = 720
@@ -269,35 +270,46 @@ def scanner(request):
         imgThres = preProcessing(img)
         biggest = getContours(imgThres)
         if biggest.size != 0:
-            imgWarped = getWarp(img, biggest)
+            imgWarped = getWarp(img, biggest, frameWidth, frameHeight)
             imgAdaptativeThre = paperProcessing(imgWarped)
         else:
             imgAdaptativeThre = img
 
         cv.imshow("Result", imgAdaptativeThre)
         if cv.waitKey(1) & 0xFF == ord('q'):
-            cv.imwrite('proyecto_python/tarea.jpg', imgAdaptativeThre)
+            cv.imwrite('ProyectoWebApp/static/tarea.jpg', imgAdaptativeThre)
             break
+
 
     #agarro la foto y la paso a una lista
     
     myconfig = r"--psm 6 --oem 3"
-
-
     pytesseract.pytesseract.tesseract_cmd = 'C:/Program Files/Tesseract-OCR/tesseract.exe'
 
-    text = pytesseract.image_to_string(PIL.Image.open('proyecto_python/tarea.jpg'),lang='eng' ,config=myconfig)
+    text = pytesseract.image_to_string(PIL.Image.open('ProyectoWebApp/static/tarea.jpg'),lang='spa' ,config=myconfig)
 
     texto_limpio = text.replace("\n\n", "\n")
-
     lineas = texto_limpio.split('\n')
-
     lineas.remove('')
     print(lineas)
-    #agarro la lista y la convierto a json
 
-    return render(request, 'creartarea.html')
+    try:
+        username_m = request.user.username
 
+        nombre_tarea_m = lineas[0]
+        descripcion_m = lineas[1]
+        fecha_inicio_m = lineas[2]
+        fecha_fin_m = lineas[3]
+        prioridad_m = lineas[4]
+
+        db.create_tarea(nombre_tarea_m,prioridad_m,descripcion_m,fecha_inicio_m,fecha_fin_m,username_m)
+        remove('ProyectoWebApp/static/tarea.jpg')
+
+        return redirect('/tareas')
+
+    except:
+        print('Error al crear tarea mediante WebCam')
+        return redirect('/')
 
 def eliminar_tarea(request, id):
     db = Database()

@@ -84,16 +84,34 @@
                 </div>
               </div>
 
-              <div class="d-grid d-md-flex justify-content-md-end my-4">
+              <div class="d-grid d-md-flex justify-content-md-end mb-3">
                 <button type="submit" class="btn btn-warning btn-lg text-white shadow">Crear</button>
               </div>
         </form>
       </div>
       <!-- Fin Crear Tarea con Json -->
 
+      <div class="container border rounded shadow mt-4">
+        <div class="row mx-3 mt-4">
+          <div class="col-md-8">
+            <h3 class="text-dark display-7">WebCam</h3>
+          </div>
+          <hr>
+        </div>
+              <div class="col-md-12">
+                <div class="mb-3">
+                  <p><small><em>O podés escanear una tarea mediante tu WebCam</em></small></p>
+                </div>
+              </div>
+
+              <div class="d-grid d-md-flex justify-content-md-center my-3">
+                <a href="{% url 'CrearTareaCamera' %}" class="btn btn-warning btn-lg text-white shadow">Escanear</a>
+              </div>
+      </div>
+
     </div>
     {% else %}
-    <h2 class="row mx-5 my-3" >Debes iniciar sesion para ver esta pestania</h2>
+    <h2 class="row mx-5 my-3" >Debes iniciar sesion para ver esta pestaña</h2>
     {% endif %}
   </div>
 </div>
