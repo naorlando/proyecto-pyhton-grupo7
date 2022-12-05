@@ -11,9 +11,15 @@ from .forms import TareaJsonForm
 from .funciones import *
 from os import remove
 import json
+import cv2 as cv
+import numpy as np
+import pytesseract
+import PIL.Image
+
 
 def home(request):
     return render(request, 'home.html')
+
 
 def signup(request):
 
@@ -41,6 +47,7 @@ def signup(request):
             'error': 'Las contraseñas no coinciden'
         })
 
+
 def signin(request):
     if request.method == 'GET':
         return render(request, 'signin.html', {
@@ -51,16 +58,18 @@ def signin(request):
             request, username=request.POST['username'], password=request.POST['password'])
         if user is None:
             return render(request, 'signin.html', {
-            'form': AuthenticationForm,
-            'error':'El Username o la Contraseña son incorrectos'
-        })
+                'form': AuthenticationForm,
+                'error': 'El Username o la Contraseña son incorrectos'
+            })
         else:
-            login(request,user)
+            login(request, user)
             return redirect('Tareas')
+
 
 def signout(request):
     logout(request)
     return redirect('Home')
+
 
 def listar_tareas(request):
     db = Database()
@@ -79,6 +88,7 @@ def listar_tareas(request):
 
     return render(request, 'tareas.html', {'tareas': info, 'paginado': paginado})
 
+
 def listar_tareas_archivadas(request):
     db = Database()
     info = db.tareas_archivadas()
@@ -95,6 +105,7 @@ def listar_tareas_archivadas(request):
         raise Http404
 
     return render(request, 'tareas.html', {'tareas': info, 'paginado': paginado})
+
 
 def modificar_tarea(request, id):
     db = Database()
@@ -123,11 +134,12 @@ def modificar_tarea(request, id):
         fecha_inicio_m = fecha_inicio_aux + ' ' + hora_inicio_aux
         fecha_fin_m = request.POST.get('fecha_fin')
         db.update_tarea(id, nombre_tarea_m, prioridad_m,
-                        descripcion_m, fecha_inicio_m, fecha_fin_m,username_m)
+                        descripcion_m, fecha_inicio_m, fecha_fin_m, username_m)
 
         return redirect('/tareas')
 
     return render(request, 'modificartarea.html', data)
+
 
 def modificar_estado(request, id, estado):
 
@@ -157,6 +169,8 @@ def archivar_tarea(request, id):
         return redirect('/home')
 
     return redirect('/tareas/' + str(id))
+
+
 def desarchivar_tarea(request, id):
 
     try:
@@ -170,6 +184,7 @@ def desarchivar_tarea(request, id):
         return redirect('/home')
 
     return redirect('/tareas/' + str(id))
+
 
 def crear_tarea(request):
     db = Database()
@@ -228,17 +243,68 @@ def crear_tarea(request):
             fecha_inicio_m = fecha_inicio_aux + ' ' + hora_inicio_aux
             fecha_fin_m = request.POST.get('fecha_fin')
             db.create_tarea(nombre_tarea_m, prioridad_m,
-                            descripcion_m, fecha_inicio_m, fecha_fin_m,username_m)
+                            descripcion_m, fecha_inicio_m, fecha_fin_m, username_m)
 
             return redirect('/tareas')
 
     return render(request, 'creartarea.html', {'form': form})
+
+
+def scanner(request):
+    
+    
+    frameWidth = 1280
+    frameHeight = 720
+    cap = cv.VideoCapture(0, cv.CAP_DSHOW)
+    cap.set(3, frameWidth)
+    cap.set(4, frameHeight)
+    cap.set(10, 150)
+
+
+    #abro la camara y scaneo la foto con la 'q'
+    while True:
+        success, img = cap.read()
+        img = cv.resize(img, (frameWidth, frameHeight))
+
+        imgThres = preProcessing(img)
+        biggest = getContours(imgThres)
+        if biggest.size != 0:
+            imgWarped = getWarp(img, biggest)
+            imgAdaptativeThre = paperProcessing(imgWarped)
+        else:
+            imgAdaptativeThre = img
+
+        cv.imshow("Result", imgAdaptativeThre)
+        if cv.waitKey(1) & 0xFF == ord('q'):
+            cv.imwrite('proyecto_python/tarea.jpg', imgAdaptativeThre)
+            break
+
+    #agarro la foto y la paso a una lista
+    
+    myconfig = r"--psm 6 --oem 3"
+
+
+    pytesseract.pytesseract.tesseract_cmd = 'C:/Program Files/Tesseract-OCR/tesseract.exe'
+
+    text = pytesseract.image_to_string(PIL.Image.open('proyecto_python/tarea.jpg'),lang='eng' ,config=myconfig)
+
+    texto_limpio = text.replace("\n\n", "\n")
+
+    lineas = texto_limpio.split('\n')
+
+    lineas.remove('')
+    print(lineas)
+    #agarro la lista y la convierto a json
+
+    return render(request, 'creartarea.html')
+
 
 def eliminar_tarea(request, id):
     db = Database()
     db.delete_tarea(id)
 
     return redirect('/tareas')
+
 
 def tarea_id(request, id):
     db = Database()
@@ -252,7 +318,7 @@ def tarea_id(request, id):
 
     data = {
         'tarea': tarea,
-        'archivado' : tarea[8],
+        'archivado': tarea[8],
         'prioridad': convertir_prioridad(tarea[6]),
         'estado': convertir_estado(tarea[5]),
         'fecha_inicio_t': fecha_inicio_t,
@@ -262,6 +328,7 @@ def tarea_id(request, id):
     }
 
     return render(request, 'tareaid.html', data)
+
 
 def exportar_tarea(request, id):
     db = Database()
@@ -275,24 +342,24 @@ def exportar_tarea(request, id):
     estado = convertir_estado(tarea[5])
     usuario = db.get_user(tarea[7])
 
-    objeto_tarea = Tarea(tarea[1],tarea[2],fecha_inicio_t + ' ' + hora_inicio_t,fecha_fin_t,estado,prioridad,usuario[0])
+    objeto_tarea = Tarea(tarea[1], tarea[2], fecha_inicio_t + ' ' +
+                         hora_inicio_t, fecha_fin_t, estado, prioridad, usuario[0])
     objeto_tarea = objeto_tarea.__dict__
 
     tarea_json = json.dumps(objeto_tarea)
     nombre_archivo = str(tarea[1]) + '.json'
-    
-    jsonFile = open('ProyectoWebApp/static/data.json','w+')
+
+    jsonFile = open('ProyectoWebApp/static/data.json', 'w+')
     jsonFile.write(tarea_json)
     jsonFile.close()
 
-    jsonFile = open('ProyectoWebApp/static/data.json','rb')
+    jsonFile = open('ProyectoWebApp/static/data.json', 'rb')
     data = jsonFile.read()
     jsonFile.close()
 
-    response = HttpResponse(data,content_type='text/plain')
+    response = HttpResponse(data, content_type='text/plain')
     response['Content-Disposition'] = 'attachement; filename=%s' % nombre_archivo
 
     remove('ProyectoWebApp/static/data.json')
 
     return response
-

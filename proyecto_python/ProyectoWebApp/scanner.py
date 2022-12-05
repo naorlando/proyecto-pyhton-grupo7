@@ -116,17 +116,13 @@ while True:
     if biggest.size != 0:
         imgWarped = getWarp(img,biggest)
         imgAdaptativeThre = paperProcessing(imgWarped)
-        imageArray = ([imgThres,imgContour],
-               [imgWarped,imgAdaptativeThre])
     else:
-        imageArray=([img,imgContour],
-            [imgThres,img])
-        
-    stackedImages = stackImages(0.6,imageArray)
+        imgAdaptativeThre = img
+    
     
 
 
-    cv.imshow("Result",stackedImages)
+    cv.imshow("Result",imgAdaptativeThre)
     if cv.waitKey(1) & 0xFF == ord ('q'):
         cv.imwrite('proyecto_python/tarea.jpg',imgAdaptativeThre)
         break
