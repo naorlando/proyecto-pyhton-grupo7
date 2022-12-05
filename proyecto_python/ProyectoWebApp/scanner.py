@@ -35,7 +35,7 @@ def getContours(img):
             if area>maxArea and len(approx) == 4:
                 biggest = approx
                 maxArea = area
-    cv.drawContours(imgContour, biggest, -1, (255, 0, 0), 23)
+    cv.drawContours(imgContour, biggest, -1, (0, 255, 0), 23)
     return biggest
 
 def reorder(myPoints):
@@ -118,7 +118,7 @@ while True:
         imgAdaptativeThre = paperProcessing(imgWarped)
         imageArray = ([imgThres,imgContour],
                [imgWarped,imgAdaptativeThre])
-        cv.imwrite('myImage2.jpg',imgAdaptativeThre)
+        cv.imwrite('tarea.jpg',imgAdaptativeThre)
     else:
         imageArray=([img,imgContour],
             [imgThres,img])
