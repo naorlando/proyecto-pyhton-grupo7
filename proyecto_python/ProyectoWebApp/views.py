@@ -256,7 +256,7 @@ def scanner(request):
     
     frameWidth = 1280
     frameHeight = 720
-    cap = cv.VideoCapture(0, cv.CAP_DSHOW)
+    cap = cv.VideoCapture(0)
     cap.set(3, frameWidth)
     cap.set(4, frameHeight)
     cap.set(10, 150)
@@ -280,18 +280,18 @@ def scanner(request):
             cv.imwrite('ProyectoWebApp/static/tarea.jpg', imgAdaptativeThre)
             break
 
+    cap.release() #dejo de grabar
+    cv.destroyAllWindows() #con esta linea ya deja abrir mas de una vez para escanear
 
     #agarro la foto y la paso a una lista
-    
     myconfig = r"--psm 6 --oem 3"
     pytesseract.pytesseract.tesseract_cmd = 'C:/Program Files/Tesseract-OCR/tesseract.exe'
 
-    text = pytesseract.image_to_string(PIL.Image.open('ProyectoWebApp/static/tarea.jpg'),lang='spa' ,config=myconfig)
+    text = pytesseract.image_to_string(PIL.Image.open('ProyectoWebApp/static/tarea.jpg'), lang='spa', config=myconfig)
 
     texto_limpio = text.replace("\n\n", "\n")
     lineas = texto_limpio.split('\n')
     lineas.remove('')
-    print(lineas)
 
     try:
         username_m = request.user.username
@@ -309,7 +309,8 @@ def scanner(request):
 
     except:
         print('Error al crear tarea mediante WebCam')
-        return redirect('/')
+        remove('ProyectoWebApp/static/tarea.jpg')
+        return redirect('/tareas')
 
 def eliminar_tarea(request, id):
     db = Database()
