@@ -35,7 +35,7 @@ def getContours(img):
             if area>maxArea and len(approx) == 4:
                 biggest = approx
                 maxArea = area
-    cv.drawContours(imgContour, biggest, -1, (0, 255, 0), 23)
+    # cv.drawContours(imgContour, biggest, -1, (0, 255, 0), 23)
     return biggest
 
 def reorder(myPoints):
@@ -114,17 +114,21 @@ while True:
     imgThres = preProcessing(img)
     biggest = getContours(imgThres)
     if biggest.size != 0:
+        cv.drawContours(img, biggest, -1, (0, 255, 0), 23)
+        cv.rectangle(img,(0,0),(460,90),(0,255,0),cv.FILLED)
+        cv.putText(img,'Presiona Q para capturar',(10,30),cv.FONT_HERSHEY_COMPLEX,1,(0,0,255),2,cv.LINE_AA)
+        cv.putText(img,'y cerrar la pestania',(10,60),cv.FONT_HERSHEY_COMPLEX,1,(0,0,255),2,cv.LINE_AA)
         imgWarped = getWarp(img,biggest)
         imgAdaptativeThre = paperProcessing(imgWarped)
     else:
-        imgAdaptativeThre = img
+        img
     
     
 
 
-    cv.imshow("Result",imgAdaptativeThre)
+    cv.imshow("Result",img)
     if cv.waitKey(1) & 0xFF == ord ('q'):
-        cv.imwrite('proyecto_python/tarea.jpg',imgAdaptativeThre)
+        # cv.imwrite('proyecto_python/tarea.jpg',imgAdaptativeThre)
         break
 
 
