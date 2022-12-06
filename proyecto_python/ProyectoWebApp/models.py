@@ -30,21 +30,27 @@ class Database():
         print("La conexion fue exitosa")
     
     #METODOS
-    def all_task (self):
-        query ='SELECT * FROM tareas WHERE archivado=0 ORDER BY prioridad_idprioridad AND fecha_fin ASC'
+    def all_task(self):
+        query = "SELECT * FROM tareas WHERE archivado = 0 ORDER BY prioridad_idprioridad, fecha_fin"
+        try:
+            self.cursor.execute(query)
+            tasks = self.cursor.fetchall()
+            tasks = list(tasks)
+            return tasks
+        except Exception:
+            print("No se pudieron obtener las tareas")
+            raise
 
-        self.cursor.execute(query)
-        tareas=self.cursor.fetchall()
-        tareas=list(tareas)
-        return tareas
-
-    def tareas_archivadas (self):
-        query ='SELECT * FROM tareas WHERE archivado=1 ORDER BY prioridad_idprioridad AND fecha_fin'
-
-        self.cursor.execute(query)
-        tareas=self.cursor.fetchall()
-        tareas=list(tareas)
-        return tareas
+    def tareas_archivadas(self):
+        query = "SELECT * FROM tareas WHERE archivado = 1 ORDER BY prioridad_idprioridad, fecha_fin"     
+        try: 
+            self.cursor.execute(query)
+            tasks = self.cursor.fetchall()
+            tasks = list(tasks)
+            return tasks
+        except Exception:
+            print("No se pudieron obtener las tareas archivadas")
+            raise
 
     def get_tarea(self, ide):
         query = "SELECT * FROM tareas WHERE idtarea = '{}'".format(ide)
@@ -52,8 +58,7 @@ class Database():
             self.cursor.execute(query)
             task = self.cursor.fetchone()
             return task
-
-        except Exception as e:
+        except Exception:
             print("La tarea no existe")
             raise
 
@@ -63,97 +68,67 @@ class Database():
             self.cursor.execute(query)
             tasks = self.cursor.fetchall()
             return tasks
-        except Exception as e:
+        except Exception:
             print("Error al obtener las tareas segun su prioridad")
             raise
 
-    def get_user (self,id):
-        query = "SELECT username FROM auth_user WHERE id = '{}'".format(id)
-
+    def get_user(self, ide):
+        query = "SELECT username FROM auth_user WHERE id = '{}'".format(ide)
         try:
             self.cursor.execute(query)
             username = self.cursor.fetchone()
             return username
-
-        except Exception as e:
+        except Exception:
             print("El usuario no existe")
             raise
 
-    def update_tarea(self, ide, nombre_tarea_m, prioridad_m, descripcion_m, fecha_inicio_m, fecha_fin_m):
+    def update_tarea(self, ide, nombre_tarea_m, prioridad_m, descripcion_m, fecha_inicio_m, fecha_fin_m, username_m):
         query = "UPDATE tareas SET nombre_tarea = '{}', descripcion = '{}', fecha_inicio = '{}',\
             fecha_fin = '{}', prioridad_idprioridad = (SELECT idprioridad FROM prioridad WHERE nombre_prioridad='{}')\
             WHERE idtarea = '{}'".format(nombre_tarea_m, descripcion_m, fecha_inicio_m, fecha_fin_m, prioridad_m, ide)
-
         try:
             self.cursor.execute(query)
             self.connection.commit()
-        except Exception as e:
+        except Exception:
             print("Error al modificar la tarea")
             raise
 
-    def update_estado_tarea(self, id, estado):
-        query = "UPDATE tareas SET estado_idestado = '{}' WHERE idtarea = '{}'".format(estado,id)
-
+    def update_estado_tarea(self, ide, estado):
+        query = "UPDATE tareas SET estado_idestado = '{}' WHERE idtarea = '{}'".format(estado, ide)
         try:
             self.cursor.execute(query)
             self.connection.commit()
-
-        except Exception as e:
+        except Exception:
             print("Error al modificar el estado de la tarea")
             raise
 
-    def archivar_tarea(self, id):
-        query = "UPDATE tareas SET archivado = '1' WHERE idtarea = '{}'".format(id)
-
+    def archivar_tarea(self, ide):
+        query = "UPDATE tareas SET archivado = '1' WHERE idtarea = '{}'".format(ide)
         try:
             self.cursor.execute(query)
             self.connection.commit()
-
-        except Exception as e:
+        except Exception:
             print("Error al archivar la tarea")
             raise
 
-    def desarchivar_tarea(self, id):
-        query = "UPDATE tareas SET archivado = '0' WHERE idtarea = '{}'".format(id)
-
+    def desarchivar_tarea(self, ide):
+        query = "UPDATE tareas SET archivado = '0' WHERE idtarea = '{}'".format(ide)
         try:
             self.cursor.execute(query)
             self.connection.commit()
-
-        except Exception as e:
+        except Exception:
             print("Error al desarchivar la tarea")
             raise
 
-    def create_tarea(self, nombre_tarea_m, prioridad_m, descripcion_m, fecha_inicio_m, fecha_fin_m,username_m):
-        query="INSERT INTO tareas(nombre_tarea, descripcion, fecha_inicio, fecha_fin, prioridad_idprioridad, auth_user_id)\
+    def create_tarea(self, nombre_tarea_m, prioridad_m, descripcion_m, fecha_inicio_m, fecha_fin_m, username_m):
+        query= "INSERT INTO tareas(nombre_tarea, descripcion, fecha_inicio, fecha_fin, prioridad_idprioridad, auth_user_id)\
             VALUES ('{}','{}','{}','{}',(SELECT idprioridad FROM prioridad WHERE nombre_prioridad='{}'),\
             (SELECT id FROM auth_user WHERE username='{}'))".format(nombre_tarea_m, descripcion_m, fecha_inicio_m, fecha_fin_m, prioridad_m, username_m)
-        
         try:
             self.cursor.execute(query)
             self.connection.commit()
         except Exception:
             print("No se pudo agregar la tarea")
-            raise
-
-    def archivo_tarea(self, ide, valor): #Si valor = 1 se archiva, si valor = 0 se desarchiva
-        query = "UPDATE tareas SET archivado = '{}' WHERE idtarea = '{}'".format(valor, ide)
-        try:
-            self.cursor.execute(query)
-            self.connection.commit()
-        except Exception:
-            print("No se pudo archivar la tarea")
-            raise
-
-    def all_task_arch(self):
-        query ='SELECT * FROM tareas WHERE archivado = 1 ORDER BY prioridad_idprioridad, fecha_fin;'     
-        try: 
-            self.cursor.execute(query)
-            tasks = self.cursor.fetchall()
-            tasks = list(tasks)
-            return tasks
-        except Exception:
-            print("No se pudieron obtener las tareas archivadas")
             raise
 
     def delete_tarea(self, ide):
@@ -167,4 +142,3 @@ class Database():
 
     def close(self):
         self.connection.close()
-

@@ -168,7 +168,7 @@ def archivar_tarea(request, id):
         print('Error al archivar la tarea')
         return redirect('/home')
 
-    return redirect('/tareas/' + str(id))
+    return redirect('/tareas')
 
 
 def desarchivar_tarea(request, id):
