@@ -262,14 +262,15 @@ def scanner(request):
     
     frameWidth = 1280
     frameHeight = 720
-    cap = cv.VideoCapture(0)
+    cap = cv.VideoCapture(0,cv.CAP_DSHOW)
     cap.set(3, frameWidth)
     cap.set(4, frameHeight)
     cap.set(10, 150)
 
-
     #abro la camara y scaneo la foto con la 'q'
+    print('antes del while')
     while True:
+        print('en el while')
         success, img = cap.read()
         img = cv.resize(img, (frameWidth, frameHeight))
 

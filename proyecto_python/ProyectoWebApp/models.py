@@ -21,7 +21,7 @@ class Database():
         self.connection = pymysql.connect(
         host='localhost',
         user='root',
-        password='',
+        password='1234',
         db='usuariospython'
     ) 
     #chequeo que la bbdd este en funcionamiento, sino no se conecta
