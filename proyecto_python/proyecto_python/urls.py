@@ -33,5 +33,6 @@ urlpatterns = [
     path('tareas/crear/camera',views.scanner,name='CrearTareaCamera'),
     path('tareas/eliminar/<int:id>',views.eliminar_tarea,name='EliminarTarea'),
     path('tareas/<int:id>',views.tarea_id,name='VerTarea'),
-    path('tareas/exportar/<int:id>',views.exportar_tarea,name='ExportarTarea')
+    path('tareas/exportar/<int:id>',views.exportar_tarea,name='ExportarTarea'),
+    path('error/', views.pagina_error, name='PaginaError')
 ]

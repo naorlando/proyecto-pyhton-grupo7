@@ -15,51 +15,69 @@
 
   {% include 'menutareas.html' %}
 
-  <div id="seccion-tareas" class="row row-cols-1 row-cols-md-3 g-4 my-4">
+    {% if not tareas %}
 
-    {% for tarea in tareas %}
-    <div class="col-tarea col">
-      <a href="{% url 'VerTarea' tarea.0 %}">
+    <div class="d-flex align-items-center justify-content-center my-5">
+                <div class="text-center">
+                    <h1 class="display-1 fw-bold">Ups!</h1>
+                    <hr>
+                    <p class="fs-3"> Algo salió mal...</p>
+                    <p class="lead">
+                        Parece que no hay tareas para mostrar en esta sección.
+                      </p>
+                </div>
+            </div>
 
-        <!-- Tareas con prioridad 'Alta' -->
-        {% if tarea.6 == 1 %}
-        <div class="card-tarea card border border-danger shadow" id="card-tareas">
-          <div class="card-body">
-            <h5 class="text-center display-7 card-title text-dark">{{tarea.1}}</h5>
-            <hr class="text-dark">
-            <p class="card-text text-dark m-0">Prioridad: <span class="badge bg-danger rounded-pill">Alta</span></p>
-            <p class="card-text text-dark m-0">Fecha limite: {{tarea.4|date}}</p>
+    {% else %}
+
+    <div id="seccion-tareas" class="row row-cols-1 row-cols-md-3 g-4 my-4">
+
+      {% for tarea in tareas %}
+
+      <div class="col-tarea col">
+        <a href="{% url 'VerTarea' tarea.0 %}">
+
+          <!-- Tareas con prioridad 'Alta' -->
+          {% if tarea.6 == 1 %}
+          <div class="card-tarea card border border-danger shadow" id="card-tareas">
+            <div class="card-body">
+              <h5 class="text-center display-7 card-title text-dark">{{tarea.1}}</h5>
+              <hr class="text-dark">
+              <p class="card-text text-dark m-0">Prioridad: <span class="badge bg-danger rounded-pill">Alta</span></p>
+              <p class="card-text text-dark m-0">Fecha limite: {{tarea.4|date}}</p>
+            </div>
           </div>
-        </div>
 
-        <!-- Tareas con prioridad 'Media' -->
-        {% elif tarea.6 == 2 %}
-        <div class="card-tarea card border border-warning shadow" id="card-tareas">
-          <div class="card-body">
-            <h5 class="text-center display-7 card-title text-dark">{{tarea.1}}</h5>
-            <hr class="text-dark">
-            <p class="card-text text-dark m-0">Prioridad: <span class="badge bg-warning rounded-pill">Media</span></p>
-            <p class="card-text text-dark m-0">Fecha limite: {{tarea.4|date}}</p>
+          <!-- Tareas con prioridad 'Media' -->
+          {% elif tarea.6 == 2 %}
+          <div class="card-tarea card border border-warning shadow" id="card-tareas">
+            <div class="card-body">
+              <h5 class="text-center display-7 card-title text-dark">{{tarea.1}}</h5>
+              <hr class="text-dark">
+              <p class="card-text text-dark m-0">Prioridad: <span class="badge bg-warning rounded-pill">Media</span></p>
+              <p class="card-text text-dark m-0">Fecha limite: {{tarea.4|date}}</p>
+            </div>
           </div>
-        </div>
 
-        <!-- Tareas con prioridad 'Baja' -->
-        {% else %}
-        <div class="card-tarea card border border-success shadow" id="card-tareas">
-          <div class="card-body">
-            <h5 class="text-center display-7 card-title text-dark">{{tarea.1}}</h5>
-            <hr class="text-dark">
-            <p class="card-text text-dark m-0">Prioridad: <span class="badge bg-success rounded-pill">Baja</span></p>
-            <p class="card-text text-dark m-0">Fecha limite: {{tarea.4|date}}</p>
+          <!-- Tareas con prioridad 'Baja' -->
+          {% else %}
+          <div class="card-tarea card border border-success shadow" id="card-tareas">
+            <div class="card-body">
+              <h5 class="text-center display-7 card-title text-dark">{{tarea.1}}</h5>
+              <hr class="text-dark">
+              <p class="card-text text-dark m-0">Prioridad: <span class="badge bg-success rounded-pill">Baja</span></p>
+              <p class="card-text text-dark m-0">Fecha limite: {{tarea.4|date}}</p>
+            </div>
           </div>
-        </div>
 
-        {% endif %}
+          {% endif %}
 
-      </a>
-    </div>
-    {% endfor %}
+        </a>
+      </div>
+      {% endfor %}
     
+    {% endif %}
+
   </div>
 
   <div class="row my-5">

@@ -5,19 +5,29 @@
 
 {% block content %}
 
-<main class="conteiner py-5">
-    <section class="card card-body">
-        <h2 class="display-1 text-center">Home</h2>
+<div class="d-flex align-items-center justify-content-center my-5">
+    <div class="text-center">
+        <h1 class="display-1 fw-bold">Home</h1>
+        <hr>
+        <p class="fs-3">¡Bienvenido!</p>
 
-        <div class="text-center">
-            <a class="btn btn-dark" href="/signin/">
-                Sign-in
-            </a>
-            <a class="btn btn-secondary" href="/signup/">
-                Sign-up
-            </a>
-        </div>
-    </section>
-</main>
+        {% if user.is_authenticated %}
+
+        <p class="lead">
+            Sesión actual: <span class="font-monospace">{{user.username}}</span>
+        </p>
+        <a href="/logout" class="btn btn-lg btn-dark rounded-pill shadow mt-4">Logout</a>
+
+        {% else %}
+
+        <p class="lead">
+            Logeate para poder crear tareas, modificarlas, gestionarlas y más... 
+        </p>
+        <a href="/signin" class="btn btn-lg btn-dark rounded-pill shadow mt-4">Sign In</a>
+        <a href="/signup" class="btn btn-lg btn-secondary rounded-pill shadow mt-4">Sign Up</a>
+
+        {% endif %}
+    </div>
+</div>
 
 {% endblock %}
