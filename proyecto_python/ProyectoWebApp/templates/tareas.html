@@ -8,35 +8,67 @@
 <div class="container p-0">
   <div class="row">
     <div class="col">
-      <h1 class="text-center display-3 py-3">TAREAS</h1>
+      <h1 class="text-center display-4">TAREAS</h1>
     </div>
   </div>
   <hr>
+
+  {% include 'menutareas.html' %}
+
   <div id="seccion-tareas" class="row row-cols-1 row-cols-md-3 g-4 my-4">
 
     {% for tarea in tareas %}
     <div class="col-tarea col">
       <a href="{% url 'VerTarea' tarea.0 %}">
-        <div class="card-tarea card shadow" id="card-tareas">
+
+        <!-- Tareas con prioridad 'Alta' -->
+        {% if tarea.6 == 1 %}
+        <div class="card-tarea card border border-danger shadow" id="card-tareas">
           <div class="card-body">
             <h5 class="text-center display-7 card-title text-dark">{{tarea.1}}</h5>
             <hr class="text-dark">
-            <p class="card-text text-dark m-0">Prioridad: {{tarea.2}}</p>
+            <p class="card-text text-dark m-0">Prioridad: <span class="badge bg-danger rounded-pill">Alta</span></p>
             <p class="card-text text-dark m-0">Fecha limite: {{tarea.4|date}}</p>
           </div>
         </div>
+
+        <!-- Tareas con prioridad 'Media' -->
+        {% elif tarea.6 == 2 %}
+        <div class="card-tarea card border border-warning shadow" id="card-tareas">
+          <div class="card-body">
+            <h5 class="text-center display-7 card-title text-dark">{{tarea.1}}</h5>
+            <hr class="text-dark">
+            <p class="card-text text-dark m-0">Prioridad: <span class="badge bg-warning rounded-pill">Media</span></p>
+            <p class="card-text text-dark m-0">Fecha limite: {{tarea.4|date}}</p>
+          </div>
+        </div>
+
+        <!-- Tareas con prioridad 'Baja' -->
+        {% else %}
+        <div class="card-tarea card border border-success shadow" id="card-tareas">
+          <div class="card-body">
+            <h5 class="text-center display-7 card-title text-dark">{{tarea.1}}</h5>
+            <hr class="text-dark">
+            <p class="card-text text-dark m-0">Prioridad: <span class="badge bg-success rounded-pill">Baja</span></p>
+            <p class="card-text text-dark m-0">Fecha limite: {{tarea.4|date}}</p>
+          </div>
+        </div>
+
+        {% endif %}
+
       </a>
     </div>
     {% endfor %}
     
   </div>
 
-  <div class="row">
+  <div class="row my-5">
 
     {% include 'paginado.html' %}
     
   </div>
 
 </div>
+
 
 {% endblock %}

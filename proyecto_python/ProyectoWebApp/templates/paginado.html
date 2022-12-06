@@ -2,43 +2,43 @@
 <div class="d-flex justify-content-center">
     <ul class="pagination">
         {% if tarea.has_previous %}
-            <li class="page-item d-none d-sm-block"><a class="page-link" href="?page={{ tarea.previous_page_number }}#pagtable">Anterior</a></li>
+            <li class="page-item d-none d-sm-block"><a class="page-link text-dark" href="?page={{ tarea.previous_page_number }}#pagtable">Anterior</a></li>
         {% endif %}
         {% for page in paginado.page_range %}
             {% if forloop.last and page != tarea.number and paginado.num_pages > 7 %} 
                 {% if tarea.next_page_number != paginado.num_pages%}
                 <li class="page-item">
-                    <a class="page-link" href="?page={{ tarea.number | add:1}}#pagtable">...</a>
+                    <a class="page-link text-dark" href="?page={{ tarea.number | add:1}}#pagtable">...</a>
                 </li>
                 {% endif %}
             <li class="page-item">
-                    <a class="page-link" href="?page={{paginado.num_pages}}#pagtable">{{paginado.num_pages}}</a>
+                    <a class="page-link text-dark" href="?page={{paginado.num_pages}}#pagtable">{{paginado.num_pages}}</a>
             </li>
             {% endif %}
             {% if page == tarea.number and page > 7 %}
             <li class="page-item">
-                <a class="page-link" href="?page={{ page | add:-1 }}#pagtable">...</a>
+                <a class="page-link text-dark" href="?page={{ page | add:-1 }}#pagtable">...</a>
             </li>    
             {% endif %}
             {% if page < 7 or page == tarea.number %}
             <li class="page-item {% if page == tarea.number %}active{% endif %}">
-                <a class="page-link" href="?page={{ page }}#pagtable">{{ page }}</a>
+                <a class="page-link text-dark" href="?page={{ page }}#pagtable">{{ page }}</a>
             </li>
             {% endif %}
         {% endfor %}
         {% if tarea.has_next %}
             <li class="page-item d-none d-sm-block">
-                <a class="page-link" href="?page={{ tarea.next_page_number }}#pagtable">Siguiente</a>
+                <a class="page-link text-dark" href="?page={{ tarea.next_page_number }}#pagtable">Siguiente</a>
             </li>
         {% endif %}
     </ul>
 </div>
 <div class="d-flex justify-content-center d-sm-none">            
     {% if tarea.has_previous %}
-        <span class="page-item"><a  class="page-link" href="?page={{ tarea.previous_page_number }}#pagtable">Anterior</a></span>
+        <span class="page-item"><a class="page-link text-dark" href="?page={{ tarea.previous_page_number }}#pagtable">Anterior</a></span>
     {% endif %}
     {% if tarea.has_next %}
-        <span class="page-item"><a class="page-link" href="?page={{ tarea.next_page_number }}#pagtable">Siguiente</a></span>
+        <span class="page-item"><a class="page-link text-dark" href="?page={{ tarea.next_page_number }}#pagtable">Siguiente</a></span>
     {% endif %}
     <br>
     <br>
