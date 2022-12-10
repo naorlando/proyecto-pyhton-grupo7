@@ -129,14 +129,14 @@ def modificar_tarea(request, id):
             fecha_inicio_m = fecha_inicio_aux + ' ' + hora_inicio_aux
             fecha_fin_m = request.POST.get('fecha_fin')
             db.update_tarea(id, nombre_tarea_m, prioridad_m,
-                            descripcion_m, fecha_inicio_m, fecha_fin_m, username_m)
+                            descripcion_m, fecha_inicio_m, fecha_fin_m)
 
             return redirect('/tareas')
         
         except:
 
-            print('Error al modificar tarea')
-            return redirect('PaginaError')
+            mensaje = 'Hubo un error al intentar modificar la tarea: ' + tarea[1]
+            return render(request,'error.html',{'mensaje': mensaje})
 
 
     return render(request, 'modificartarea.html', data)
@@ -151,8 +151,8 @@ def modificar_estado(request, id, estado):
 
     except:
 
-        print('Error al modificar el estado de la tarea')
-        return redirect('PaginaError')
+        mensaje = 'Hubo un error al modificar el estado de la tarea'
+        return render(request,'error.html',{'mensaje': mensaje})
 
     return redirect('/tareas/' + str(id))
 
@@ -166,8 +166,8 @@ def archivar_tarea(request, id):
 
     except:
 
-        print('Error al archivar la tarea')
-        return redirect('PaginaError')
+        mensaje = 'Hubo un error al intentar archivar la tarea'
+        return render(request,'error.html',{'mensaje': mensaje})
 
     return redirect('/tareas/' + str(id))
 
@@ -181,8 +181,8 @@ def desarchivar_tarea(request, id):
 
     except:
 
-        print('Error al desarchivar la tarea')
-        return redirect('PaginaError')
+        mensaje = 'Hubo un error al intentar desarchivar la tarea'
+        return render(request,'error.html',{'mensaje': mensaje})
 
     return redirect('/tareas/' + str(id))
 
@@ -193,44 +193,47 @@ def crear_tarea(request):
 
     if request.method == "POST":
 
-        # if request.POST.get('archivoJson'):
         form = TareaJsonForm(request.POST, request.FILES)
 
         # En caso de utilizar el formulario input file
         if form.is_valid():
 
-            # Crea el archivo data.json con la info recibida y lo cierra
-            tareaJson = open('ProyectoWebApp/static/data.json', "wb+")
-            for i in request.FILES['file'].chunks():
-                tareaJson.write(i)
-            tareaJson.close()
-
-            # Abre el archivo cerado, lo lee y almacena como str en una variable, y lo cierra
-            tareaJson = open('ProyectoWebApp/static/data.json', "r")
-            tareas = tareaJson.read()
-            tareaJson.close()
-
-            # Transformama el json leido a un diccionario, lo recorre y almacena cada valor
             try:
-                data = json.loads(tareas)
-                username_m = request.user.username
-                for i in data:
-                    nombre_tarea_m = i['nombre_tarea']
-                    descripcion_m = i['descripcion']
-                    fecha_inicio_m = i['fecha_inicio']
-                    fecha_fin_m = i['fecha_fin']
-                    prioridad_m = i['prioridad']
-                    db.create_tarea(nombre_tarea_m, prioridad_m,
-                                    descripcion_m, fecha_inicio_m, fecha_fin_m, username_m)
+                # Crea el archivo data.json con la info recibida y lo cierra
+                tareaJson = open('ProyectoWebApp/static/data.json', "wb+")
+                for i in request.FILES['file'].chunks():
+                    tareaJson.write(i)
+                tareaJson.close()
 
-                # Elimina el archivo
-                remove('ProyectoWebApp/static/data.json')
+                # Abre el archivo cerado, lo lee y almacena como str en una variable, y lo cierra
+                tareaJson = open('ProyectoWebApp/static/data.json', "r")
+                tareas = tareaJson.read()
+                tareaJson.close()
 
-                return redirect('/tareas')
+                # Transformama el json leido a un diccionario, lo recorre y almacena cada valor
+                try:
+                    data = json.loads(tareas)
+                    username_m = request.user.username
+                    for i in data:
+                        nombre_tarea_m = i['nombre_tarea']
+                        descripcion_m = i['descripcion']
+                        fecha_inicio_m = i['fecha_inicio']
+                        fecha_fin_m = i['fecha_fin']
+                        prioridad_m = i['prioridad']
+                        db.create_tarea(nombre_tarea_m, prioridad_m,
+                                        descripcion_m, fecha_inicio_m, fecha_fin_m, username_m)
 
+                    # Elimina el archivo
+                    remove('ProyectoWebApp/static/data.json')
+
+                    return redirect('/tareas')
+
+                except:
+                    mensaje = 'Error al crear tarea mediante archivo JSON'
+                    return render(request,'error.html',{'mensaje': mensaje})
             except:
-                print('Error al crear tarea mediante archivo JSON')
-                return redirect('PaginaError')
+                mensaje = 'Error al intentar abrir el archivo'
+                return render(request,'error.html',{'mensaje': mensaje})
 
         # En caso de utilizar el formulario manual
         else:
@@ -250,8 +253,8 @@ def crear_tarea(request):
                 return redirect('/tareas')
             except:
 
-                print('Error al crear tarea')
-                return redirect('PaginaError')
+                mensaje = 'Error al crear la tarea'
+                return render(request,'error.html',{'mensaje': mensaje})
 
     return render(request, 'creartarea.html', {'form': form})
 
@@ -286,8 +289,14 @@ def scanner(request):
 
         cv.imshow("Result", img)
         if cv.waitKey(1) & 0xFF == ord('q'):
-            cv.imwrite('ProyectoWebApp/static/tarea.jpg', imgAdaptativeThre)
-            break
+            try:
+                cv.imwrite('ProyectoWebApp/static/tarea.jpg', imgAdaptativeThre)
+                break
+            except:
+                cap.release() #dejo de grabar
+                cv.destroyAllWindows() #con esta linea ya deja abrir mas de una vez para escanear
+                mensaje = 'Hubo un error al iniciar la cámara'
+                return render(request,'error.html',{'mensaje': mensaje})
 
     cap.release() #dejo de grabar
     cv.destroyAllWindows() #con esta linea ya deja abrir mas de una vez para escanear
@@ -296,7 +305,7 @@ def scanner(request):
     myconfig = r"--psm 6 --oem 3"
     pytesseract.pytesseract.tesseract_cmd = 'C:/Program Files/Tesseract-OCR/tesseract.exe'
 
-    text = pytesseract.image_to_string(PIL.Image.open('ProyectoWebApp/static/tarea.jpg'), lang='spa', config=myconfig)
+    text = pytesseract.image_to_string(PIL.Image.open('ProyectoWebApp/static/tarea.jpg'), lang='eng', config=myconfig)
 
     texto_limpio = text.replace("\n\n", "\n")
     lineas = texto_limpio.split('\n')
@@ -307,9 +316,9 @@ def scanner(request):
 
         nombre_tarea_m = lineas[0]
         descripcion_m = lineas[1]
-        fecha_inicio_m = lineas[2]
-        fecha_fin_m = lineas[3]
-        prioridad_m = lineas[4]
+        fecha_inicio_m = datetime.now
+        fecha_fin_m = lineas[2]
+        prioridad_m = lineas[3]
 
         db.create_tarea(nombre_tarea_m,prioridad_m,descripcion_m,fecha_inicio_m,fecha_fin_m,username_m)
         remove('ProyectoWebApp/static/tarea.jpg')
@@ -318,8 +327,11 @@ def scanner(request):
 
     except:
         print('Error al crear tarea mediante WebCam')
+        print(lineas)
         remove('ProyectoWebApp/static/tarea.jpg')
-        return redirect('PaginaError')
+        mensaje = 'Hubo un error al intentar crear la tarea'
+        return render(request,'error.html',{'mensaje': mensaje})
+
 
 def eliminar_tarea(request, id):
     db = Database()
@@ -333,21 +345,25 @@ def tarea_id(request, id):
     tarea = db.get_tarea(id)
     # prod = Item.objects.get(idproducto = id)
 
-    fecha_inicio_t = tarea[3].strftime('%Y-%m-%d')
-    hora_inicio_t = tarea[3].strftime('%H:%M')
-    fecha_fin_t = tarea[4].strftime('%Y-%m-%d')
-    usuario = db.get_user(tarea[7])
+    try:
+        fecha_inicio_t = tarea[3].strftime('%Y-%m-%d')
+        hora_inicio_t = tarea[3].strftime('%H:%M')
+        fecha_fin_t = tarea[4].strftime('%Y-%m-%d')
+        usuario = db.get_user(tarea[7])
 
-    data = {
-        'tarea': tarea,
-        'archivado': tarea[8],
-        'prioridad': convertir_prioridad(tarea[6]),
-        'estado': convertir_estado(tarea[5]),
-        'fecha_inicio_t': fecha_inicio_t,
-        'hora_inicio_t': hora_inicio_t,
-        'fecha_fin_t': fecha_fin_t,
-        'usuario': usuario
-    }
+        data = {
+            'tarea': tarea,
+            'archivado': tarea[8],
+            'prioridad': convertir_prioridad(tarea[6]),
+            'estado': convertir_estado(tarea[5]),
+            'fecha_inicio_t': fecha_inicio_t,
+            'hora_inicio_t': hora_inicio_t,
+            'fecha_fin_t': fecha_fin_t,
+            'usuario': usuario
+        }
+    except:
+        mensaje = 'Hubo un error al intentar abrir la tarea: ' + tarea[1]
+        return render(request,'error.html',{'mensaje': mensaje})
 
     return render(request, 'tareaid.html', data)
 
