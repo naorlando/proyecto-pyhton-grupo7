@@ -217,7 +217,13 @@ def crear_tarea(request):
                     for i in data:
                         nombre_tarea_m = i['nombre_tarea']
                         descripcion_m = i['descripcion']
-                        fecha_inicio_m = i['fecha_inicio']
+
+                        if i['fecha_inicio'] == 'Actual' or i['fecha_inicio'] == 'ACTUAL' or i['fecha_inicio'] == 'actual':
+                            fecha_actual = datetime.now()
+                            fecha_inicio_m = fecha_actual.strftime("%Y/%m/%d %H:%M")
+                        else:
+                            fecha_inicio_m = i['fecha_inicio']
+
                         fecha_fin_m = i['fecha_fin']
                         prioridad_m = i['prioridad']
                         db.create_tarea(nombre_tarea_m, prioridad_m,
@@ -312,11 +318,14 @@ def scanner(request):
     lineas.remove('')
 
     try:
+
+        fecha_actual = datetime.now()
+
         username_m = request.user.username
 
         nombre_tarea_m = lineas[0]
         descripcion_m = lineas[1]
-        fecha_inicio_m = datetime.now
+        fecha_inicio_m = fecha_actual.strftime("%Y/%m/%d %H:%M")
         fecha_fin_m = lineas[2]
         prioridad_m = lineas[3]
 
