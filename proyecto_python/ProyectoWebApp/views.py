@@ -269,6 +269,22 @@ def crear_tarea(request):
     return render(request, 'creartarea.html', {'form': form})
 
 
+def mis_tareas(request):
+    db = Database()
+
+    info = db.get_tareas_usuario(request.user.username)
+
+    nro_pagina = request.GET.get('page', 1)
+
+    try:
+        paginado = Paginator(info, 6)
+        info = paginado.page(nro_pagina)
+    except:
+        raise Http404
+
+    return render(request, 'tareas.html', {'tareas': info, 'paginado': paginado})
+
+
 def scanner(request):
     
     db = Database()

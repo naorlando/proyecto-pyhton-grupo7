@@ -82,6 +82,17 @@ class Database():
             print("El usuario no existe")
             raise
 
+    def get_tareas_usuario(self, usuario):
+        query = "SELECT * FROM tareas WHERE auth_user_id = (SELECT id FROM auth_user WHERE username = '{}')\
+            AND archivado = 0 ORDER BY prioridad_idprioridad, fecha_fin".format(usuario)
+        try:
+            self.cursor.execute(query)
+            tareas_encontradas = self.cursor.fetchall()
+            return tareas_encontradas
+        except Exception:
+            print("No se pudo encontrar ninguna tarea")
+            raise
+
     def get_tarea_buscada(self, tarea_buscada):
         query = "SELECT * FROM tareas WHERE nombre_tarea LIKE '%{}%'\
             AND archivado = 0".format(tarea_buscada)
@@ -95,7 +106,7 @@ class Database():
 
     def update_tarea(self, ide, nombre_tarea_m, prioridad_m, descripcion_m, fecha_inicio_m, fecha_fin_m):
         query = "UPDATE tareas SET nombre_tarea = '{}', descripcion = '{}', fecha_inicio = '{}',\
-            fecha_fin = '{}', prioridad_idprioridad = (SELECT idprioridad FROM prioridad WHERE nombre_prioridad='{}')\
+            fecha_fin = '{}', prioridad_idprioridad = (SELECT idprioridad FROM prioridad WHERE nombre_prioridad = '{}')\
             WHERE idtarea = '{}'".format(nombre_tarea_m, descripcion_m, fecha_inicio_m, fecha_fin_m, prioridad_m, ide)
         try:
             self.cursor.execute(query)

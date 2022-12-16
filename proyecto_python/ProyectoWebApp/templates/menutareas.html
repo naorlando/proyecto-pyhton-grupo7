@@ -1,11 +1,20 @@
 <div class="container">
   <div class="row">
+
     <div class="col-12 col-md-3">
-      <a style="text-decoration: none; color: #000;" href="/tareas">Activas&nbsp;</a>
-      <span>|</span>
-      <a style="text-decoration: none; color: #000;" href="/tareas/archivadas">&nbsp;Archivadas</a>
+      <div class="btn-group dropend">
+        <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Filtrar Por&nbsp;&nbsp;</button>
+        <ul class="dropdown-menu dropdown-menu-dark">
+          <li><a class="dropdown-item" href="/tareas">Activas</a></li>
+          <li><a class="dropdown-item" href="/tareas/archivadas">Archivadas</a></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><a class="dropdown-item" href="{% url 'MisTareas' %}">Mis Tareas</a></li>
+        </ul>
+      </div>
     </div>
+
     <div class="col-md-5"></div>
+
     <div class="col-12 col-md-4">
       <form class="d-flex" role="search" action="/tareas/" method="POST">
         {% csrf_token %}
@@ -15,6 +24,7 @@
         </button>
       </form>
     </div>
+
   </div>
 </div>
   

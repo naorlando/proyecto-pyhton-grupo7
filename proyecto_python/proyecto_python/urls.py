@@ -29,6 +29,7 @@ urlpatterns = [
     path('tareas/modificar-estado/<int:id>/<int:estado>',views.modificar_estado,name='ModificarEstado'),
     path('tareas/archivar-tarea/<int:id>',views.archivar_tarea,name='ArchivarTarea'),
     path('tareas/desarchivar-tarea/<int:id>',views.desarchivar_tarea,name='DesarchivarTarea'),
+    path('tareas/mis-tareas',views.mis_tareas,name='MisTareas'),
     path('tareas/crear',views.crear_tarea,name='CrearTarea'),
     path('tareas/crear/camera',views.scanner,name='CrearTareaCamera'),
     path('tareas/eliminar/<int:id>',views.eliminar_tarea,name='EliminarTarea'),
