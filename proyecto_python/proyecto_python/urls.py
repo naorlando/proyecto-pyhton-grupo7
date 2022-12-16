@@ -25,7 +25,6 @@ urlpatterns = [
     path('signup/',views.signup, name='signup'),
     path('signin/',views.signin, name='signin'),
     path('logout/',views.signout, name='logout'),
-    path('tareas/buscar-tarea',views.buscar_tarea, name='BuscarTarea'),
     path('tareas/modificar/<int:id>',views.modificar_tarea,name='ModificarTarea'),
     path('tareas/modificar-estado/<int:id>/<int:estado>',views.modificar_estado,name='ModificarEstado'),
     path('tareas/archivar-tarea/<int:id>',views.archivar_tarea,name='ArchivarTarea'),

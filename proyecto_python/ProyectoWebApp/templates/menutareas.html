@@ -1,12 +1,13 @@
 <div class="container">
   <div class="row">
     <div class="col-12 col-md-3">
-      <a style="text-decoration: none; color: #000;" href="/tareas">Activas</a>
-      <a style="text-decoration: none; color: #000;" href="/tareas/archivadas">Archivadas</a>
+      <a style="text-decoration: none; color: #000;" href="/tareas">Activas&nbsp;</a>
+      <span>|</span>
+      <a style="text-decoration: none; color: #000;" href="/tareas/archivadas">&nbsp;Archivadas</a>
     </div>
     <div class="col-md-5"></div>
     <div class="col-12 col-md-4">
-      <form class="d-flex" role="search" action="/tareas/buscar-tarea" method="POST">
+      <form class="d-flex" role="search" action="/tareas/" method="POST">
         {% csrf_token %}
         <input class="form-control shadow-sm me-2" type="search" name="tarea_buscada" placeholder="Buscar Tarea" required>
         <button class="btn btn-outline-secondary rounded rounded-circle shadow-sm" type="submit">

@@ -73,7 +73,11 @@ def signout(request):
 
 def listar_tareas(request):
     db = Database()
-    info = db.all_task()
+
+    if request.method == "POST":
+        info = db.get_tarea_buscada(request.POST.get('tarea_buscada'))
+    else:
+        info = db.all_task()
 
     nro_pagina = request.GET.get('page', 1)
 
@@ -155,23 +159,6 @@ def modificar_estado(request, id, estado):
         return render(request,'error.html',{'mensaje': mensaje})
 
     return redirect('/tareas/' + str(id))
-
-
-def buscar_tarea(request):
-    db = Database()
-
-    if request.method == "POST":
-        info = db.get_tarea_buscada(request.POST.get('tarea_buscada'))
-
-        nro_pagina = request.GET.get('page', 1)
-
-        try:
-            paginado = Paginator(info, 6)
-            info = paginado.page(nro_pagina)
-        except:
-            raise Http404
-
-    return render(request, 'tareas.html', {'tareas': info, 'paginado': paginado})
 
 
 def archivar_tarea(request, id):

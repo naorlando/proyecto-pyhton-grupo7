@@ -83,7 +83,8 @@ class Database():
             raise
 
     def get_tarea_buscada(self, tarea_buscada):
-        query = "SELECT * FROM tareas WHERE nombre_tarea LIKE '%{}%'".format(tarea_buscada)
+        query = "SELECT * FROM tareas WHERE nombre_tarea LIKE '%{}%'\
+            AND archivado = 0".format(tarea_buscada)
         try:
             self.cursor.execute(query)
             tareas_encontradas = self.cursor.fetchall()
