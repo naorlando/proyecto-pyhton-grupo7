@@ -22,7 +22,7 @@ class Database():
         host='localhost',
         user='root',
         password='',
-        db='usuariospython'
+        db='db-proyecto'
     ) 
     #chequeo que la bbdd este en funcionamiento, sino no se conecta
     #y lanza un error (no llega al print)
@@ -80,6 +80,16 @@ class Database():
             return username
         except Exception:
             print("El usuario no existe")
+            raise
+
+    def get_tarea_buscada(self, tarea_buscada):
+        query = "SELECT * FROM tareas WHERE nombre_tarea LIKE '%{}%'".format(tarea_buscada)
+        try:
+            self.cursor.execute(query)
+            tareas_encontradas = self.cursor.fetchall()
+            return tareas_encontradas
+        except Exception:
+            print("No se pudo encontrar ninguna tarea")
             raise
 
     def update_tarea(self, ide, nombre_tarea_m, prioridad_m, descripcion_m, fecha_inicio_m, fecha_fin_m):

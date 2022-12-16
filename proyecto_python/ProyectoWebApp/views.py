@@ -157,6 +157,23 @@ def modificar_estado(request, id, estado):
     return redirect('/tareas/' + str(id))
 
 
+def buscar_tarea(request):
+    db = Database()
+
+    if request.method == "POST":
+        info = db.get_tarea_buscada(request.POST.get('tarea_buscada'))
+
+        nro_pagina = request.GET.get('page', 1)
+
+        try:
+            paginado = Paginator(info, 6)
+            info = paginado.page(nro_pagina)
+        except:
+            raise Http404
+
+    return render(request, 'tareas.html', {'tareas': info, 'paginado': paginado})
+
+
 def archivar_tarea(request, id):
 
     try:
@@ -287,7 +304,7 @@ def scanner(request):
             cv.drawContours(img, biggest, -1, (0, 255, 0), 23)
             cv.rectangle(img,(0,0),(460,90),(0,255,0),cv.FILLED)
             cv.putText(img,'Presiona Q para capturar',(10,30),cv.FONT_HERSHEY_COMPLEX,1,(0,0,255),2,cv.LINE_AA)
-            cv.putText(img,'y cerrar la pestania',(10,60),cv.FONT_HERSHEY_COMPLEX,1,(0,0,255),2,cv.LINE_AA)
+            cv.putText(img,'y cerrar la pestaña',(10,60),cv.FONT_HERSHEY_COMPLEX,1,(0,0,255),2,cv.LINE_AA)
             imgWarped = getWarp(img, biggest, frameWidth, frameHeight)
             imgAdaptativeThre = paperProcessing(imgWarped)
         else:
