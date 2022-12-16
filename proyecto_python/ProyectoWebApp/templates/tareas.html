@@ -41,7 +41,7 @@
           {% if tarea.6 == 1 %}
           <div class="card-tarea card border border-danger shadow" id="card-tareas">
             <div class="card-body">
-              <h5 class="text-center display-7 card-title text-dark">{{tarea.1}}</h5>
+              <h5 class="text-center display-7 card-title text-dark">{{tarea.1|truncatechars:24}}</h5>
               <hr class="text-dark">
               <p class="card-text text-dark m-0">Prioridad: <span class="badge bg-danger rounded-pill">Alta</span></p>
               <p class="card-text text-dark m-0">Fecha limite: {{tarea.4|date}}</p>
@@ -52,7 +52,7 @@
           {% elif tarea.6 == 2 %}
           <div class="card-tarea card border border-warning shadow" id="card-tareas">
             <div class="card-body">
-              <h5 class="text-center display-7 card-title text-dark">{{tarea.1}}</h5>
+              <h5 class="text-center display-7 card-title text-dark">{{tarea.1|truncatechars:25}}</h5>
               <hr class="text-dark">
               <p class="card-text text-dark m-0">Prioridad: <span class="badge bg-warning rounded-pill">Media</span></p>
               <p class="card-text text-dark m-0">Fecha limite: {{tarea.4|date}}</p>
@@ -63,7 +63,7 @@
           {% else %}
           <div class="card-tarea card border border-success shadow" id="card-tareas">
             <div class="card-body">
-              <h5 class="text-center display-7 card-title text-dark">{{tarea.1}}</h5>
+              <h5 class="text-center display-7 card-title text-dark">{{tarea.1|truncatechars:25}}</h5>
               <hr class="text-dark">
               <p class="card-text text-dark m-0">Prioridad: <span class="badge bg-success rounded-pill">Baja</span></p>
               <p class="card-text text-dark m-0">Fecha limite: {{tarea.4|date}}</p>
