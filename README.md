@@ -1,13 +1,13 @@
 <div align="center">
 
-  <img src="proyecto_python/ProyectoWebApp/static/img/logo.png" alt="logo" width="200" height="auto" />
-  <h1>Proyecto Python Grupo 7</h1>
+  <img src="proyecto_python/ProyectoWebApp/static/img/logo.png" alt="logo" width="150" height="auto" />
+  <h1></h1>
   
   <p>
     <i>Este Proyecto fue realizado para la Academia Python 2022</i> - <a href="https://www.capgemini.com/ar-es/">Capgemini</a> | <a href="https://www.frba.utn.edu.ar/">UTN FRBA</a>
   </p>
   
-  <div align="center" style="display:flex;justify-content:center; align-items:center;"><img src="proyecto_python/ProyectoWebApp/static/img/capgemini-logo.png" width="200"/><img src="proyecto_python/ProyectoWebApp/static/img/utn-frba-logo.png" width="200"/></div>
+  <div align="center" style="display:flex;justify-content:center; align-items:center;"><img src="proyecto_python/ProyectoWebApp/static/img/capgemini-logo.png" width="200"/>&nbsp;&nbsp;&nbsp;&nbsp;<img src="proyecto_python/ProyectoWebApp/static/img/utn-frba-logo.png" width="200"/></div>
  <br/>
   
 ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
@@ -23,7 +23,7 @@
 <br />
 
 <!-- Sobre el proyecto -->
-## :ledger: Sobre el Proyecto
+## :pushpin: Sobre el Proyecto
 
 <!-- Descripción -->
 ### :mag_right: Descripción
@@ -38,4 +38,12 @@
   <img src="proyecto_python/ProyectoWebApp/static/img/captura-app.jpg" alt="screenshot" />
 </div>
 
+<!-- Autores -->
+## :wave: Autores
+
+* [Nahuel Orlando](https://github.com/naorlando): naorlando@frba.utn.edu.ar
+* [Franco Cristofaro](https://github.com/frcristofaro): [linkedin.com/in/francocristofaro](https://www.linkedin.com/in/francocristofaro?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3BVi%2FFWcfPT%2FCCrIs%2FEPgTNg%3D%3D) - fcristofaro@frba.utn.edu.ar
+* Fabrizio Hermosa: rhermosaramirez@frba.utn.edu.ar
+
+Link del Proyecto: [https://github.com/naorlando/proyecto-python-grupo7](https://github.com/naorlando/proyecto-python-grupo7)
 
