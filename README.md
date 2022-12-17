@@ -7,7 +7,7 @@
     <i>Este Proyecto fue realizado para la Academia Python 2022</i> - <a href="https://www.capgemini.com/ar-es/">Capgemini</a> | <a href="https://www.frba.utn.edu.ar/">UTN FRBA</a>
   </p>
   
-  <div align="center" style="display:flex;justify-content:center; align-items:center;"><img src="proyecto_python/ProyectoWebApp/static/img/capgemini_logo.png" width="200"/><img src="proyecto_python/ProyectoWebApp/static/img/utn-frba-logo.png" width="200"/></div>
+  <div align="center" style="display:flex;justify-content:center; align-items:center;"><img src="proyecto_python/ProyectoWebApp/static/img/capgemini-logo.png" width="200"/><img src="proyecto_python/ProyectoWebApp/static/img/utn-frba-logo.png" width="200"/></div>
  <br/>
   
 ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
