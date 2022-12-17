@@ -5,7 +5,7 @@
 
 {% block content %}
 
-<div class="container my-4 border rounded shadow ">
+<div class="container my-5 border rounded shadow" id="fondo-opaco">
   <div class="row mx-5 mt-4">
     <div class="col-8">
       <h1 class="text-dark display-7">{{ tarea.1 }}</h1>
@@ -15,19 +15,19 @@
     <form class="row mx-5 my-3">
       {% csrf_token %}
       <div class="col-md-6">
-        <div class="input-group">
+        <div class="input-group shadow-sm">
           <span class="input-group-text">Nombre</span>
           <input type="text" readonly class="form-control" name="nombre" value="{{ tarea.1 }}">
         </div>
       </div>
       <div class="col-md-4">
-        <div class="input-group">
+        <div class="input-group shadow-sm">
           <span class="input-group-text">Prioridad</span>
           <input type="text" readonly class="form-control" name="prioridad" value="{{ prioridad }}">
         </div>
       </div>
       <div class="col-md-12 my-4">
-        <textarea type="text" readonly class="form-control" name="descripcion" rows="4" maxlength="250">{{ tarea.2 }}</textarea>
+        <textarea type="text" readonly class="form-control shadow-sm" name="descripcion" rows="4" maxlength="250">{{ tarea.2 }}</textarea>
       </div>
       <div class="mb-2 row">
         <div class="col-md-4">
@@ -47,7 +47,7 @@
         {% if user.is_authenticated and user.username == usuario.0 %}
         <div class="col-md-4">
           <span>Estado Actual: </span>
-          <div class="btn-group border dropend mx-3">
+          <div class="btn-group border shadow-sm dropend mx-3">
             <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
               {{ estado }}
             </button>
@@ -88,7 +88,7 @@
                 <a href="{% url 'DesarchivarTarea' tarea.0 %}" class="btn btn-warning btn-md justify-content-md-start text-white shadow mx-2">Desarchivar</a>
                 {% else %}
                 <a href="{% url 'ArchivarTarea' tarea.0 %}" class="btn btn-warning btn-md text-white shadow mx-2">Archivar</a>
-                <span><small><i>CUIDADO:</i> Si se archiva una tarea, no se listara.</small></span>
+                <span><small><i>CUIDADO:</i> Si se archiva una tarea, esta no se listará.</small></span>
                 {% endif %}
               </div>
 

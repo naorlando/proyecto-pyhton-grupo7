@@ -3,7 +3,7 @@
 
     <div class="col-12 col-md-3">
       <div class="btn-group dropend">
-        <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Filtrar Por&nbsp;&nbsp;</button>
+        <button type="button" class="btn border shadow dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Filtrar Por&nbsp;&nbsp;</button>
         <ul class="dropdown-menu dropdown-menu-dark">
           <li><a class="dropdown-item" href="/tareas">Activas</a></li>
           <li><a class="dropdown-item" href="/tareas/archivadas">Archivadas</a></li>
@@ -19,7 +19,7 @@
       <form class="d-flex" role="search" action="/tareas/" method="POST">
         {% csrf_token %}
         <input class="form-control shadow-sm me-2" type="search" name="tarea_buscada" placeholder="Buscar Tarea" required>
-        <button class="btn btn-outline-secondary rounded rounded-circle shadow-sm" type="submit">
+        <button class="btn btn-outline-dark rounded rounded-circle shadow-sm" type="submit">
           <i class="fa-solid fa-magnifying-glass"></i>
         </button>
       </form>

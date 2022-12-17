@@ -12,7 +12,7 @@
                 </li>
                 {% endif %}
             <li class="page-item">
-                    <a class="page-link text-dark" href="?page={{paginado.num_pages}}#pagtable">{{paginado.num_pages}}</a>
+                    <a class="page-link text-dark fw-bold shadow-sm" href="?page={{paginado.num_pages}}#pagtable" style="opacity: 50%;">{{paginado.num_pages}}</a>
             </li>
             {% endif %}
             {% if page == tarea.number and page > 7 %}
@@ -22,7 +22,7 @@
             {% endif %}
             {% if page < 7 or page == tarea.number %}
             <li class="page-item {% if page == tarea.number %}active{% endif %}">
-                <a class="page-link text-dark" href="?page={{ page }}#pagtable">{{ page }}</a>
+                <a class="page-link text-dark fw-bold shadow-sm" href="?page={{ page }}#pagtable" style="opacity: 50%;">{{ page }}</a>
             </li>
             {% endif %}
         {% endfor %}

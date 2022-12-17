@@ -5,19 +5,21 @@
 
 {% block content %}
 
-<div class="container p-0">
-  <div class="row">
+<div class="container border rounded shadow my-5" id="fondo-opaco">
+
+  <div class="row mt-3">
     <div class="col">
       <h1 class="text-center display-4">TAREAS</h1>
     </div>
   </div>
+
   <hr>
 
   {% include 'menutareas.html' %}
 
     {% if not tareas %}
 
-    <div class="d-flex align-items-center justify-content-center my-5">
+    <div class="row d-flex align-items-center justify-content-center my-5">
       <div class="text-center">
           <h1 class="display-1 fw-bold">Ups!</h1>
           <hr>
@@ -80,13 +82,11 @@
 
   </div>
 
-  <div class="row my-5">
+  <div class="row mt-5 mb-4">
 
     {% include 'paginado.html' %}
     
   </div>
 
 </div>
-
-
 {% endblock %}

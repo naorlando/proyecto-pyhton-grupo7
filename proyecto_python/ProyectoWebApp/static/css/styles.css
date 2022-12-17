@@ -1,3 +1,17 @@
+/*Fondos de pantalla*/
+body {
+  /*background-image: url("../img/fondo1.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;*/
+
+  background: url("../img/fondo1.jpg") no-repeat fixed;
+  background-size: cover;
+}
+
+#fondo-opaco {
+  background-color: rgba(240, 240, 240, 90%);
+}
+
 /*Agrandar links del menú al pasar el mouse*/
 .nav-link {
   transition: ease-in-out 0.3s;

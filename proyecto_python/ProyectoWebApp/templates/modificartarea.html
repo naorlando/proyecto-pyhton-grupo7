@@ -5,10 +5,10 @@
 
 {% block content %}
 
-<div class="container my-4 border rounded shadow">
+<div class="container my-5 border rounded shadow" id="fondo-opaco">
   <div class="row mx-5 mt-4">
     <div class="col-8">
-      <h1 class="text-dark display-7">Modificar {{ tarea.1 }} </h1>
+      <h1 class="text-dark display-7">Modificar '{{ tarea.1 }}' </h1>
     </div>
     <hr>
   </div>
@@ -16,13 +16,13 @@
     <form class="row mx-5 my-3" method="POST">
       {% csrf_token %}
         <div class="col-md-6">
-          <div class="input-group">
+          <div class="input-group shadow-sm">
             <span class="input-group-text">Nombre</span>
             <input type="text" class="form-control" name="nombre" value="{{ tarea.1 }}" required>
           </div>
         </div>
         <div class="col-md-4">
-          <div class="input-group">
+          <div class="input-group shadow-sm">
             <span class="input-group-text">Prioridad</span>
             <select class="form-select" name="prioridad">
               <option selected>{{ prioridad_t }}</option>
@@ -33,23 +33,23 @@
           </div>
         </div>
         <div class="col-md-12 my-4">
-          <textarea type="text" class="form-control" name="descripcion" rows="4" maxlength="250" required>{{ tarea.2 }}</textarea>
+          <textarea type="text" class="form-control shadow-sm" name="descripcion" rows="4" maxlength="250" required>{{ tarea.2 }}</textarea>
           <div id="emailHelp" class="form-text">Descripción de hasta 250 caracteres.</div>
         </div>
         <div class="col-md-3 mb-3">
           <label for="" class="form-label">Fecha de Inicio</label>
-          <input type="date" class="form-control" name="fecha_inicio" min="2021-01-01" max="2027-12-31" value="{{ fecha_inicio_t }}" required>
+          <input type="date" class="form-control shadow-sm" name="fecha_inicio" min="2021-01-01" max="2027-12-31" value="{{ fecha_inicio_t }}" required>
         </div>
         <div class="col-md-3 mb-3">
           <label for="" class="form-label">Hora de Inicio</label>
-          <input type="time" class="form-control" name="hora_inicio" value="{{ hora_inicio_t }}" required>
+          <input type="time" class="form-control shadow-sm" name="hora_inicio" value="{{ hora_inicio_t }}" required>
         </div>
         <div class="col-md-3 mb-3">
           <label for="" class="form-label">Fecha de Finalizacion</label>
-          <input type="date" class="form-control" name="fecha_fin" min="2021-01-01" max="2027-12-31" value="{{ fecha_fin_t }}" required>
+          <input type="date" class="form-control shadow-sm" name="fecha_fin" min="2021-01-01" max="2027-12-31" value="{{ fecha_fin_t }}" required>
         </div>
         <div class="d-grid d-md-flex justify-content-md-end my-4">
-          <button type="submit" class="btn btn-success btn-lg text-white shadow">Guardar Cambios</button>
+          <button type="submit" class="btn btn-warning btn-lg text-white shadow">Guardar Cambios</button>
         </div>
   </form>
   {% else %}
