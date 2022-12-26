@@ -5,10 +5,18 @@
       <div class="btn-group dropend">
         <button type="button" class="btn border shadow dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Filtrar Por&nbsp;&nbsp;</button>
         <ul class="dropdown-menu dropdown-menu-dark">
-          <li><a class="dropdown-item" href="/tareas">Activas</a></li>
+          <li><a class="dropdown-item" href="/tareas">Prioridad</a>
+            <ul class="dropdown-menu dropdown-menu-dark submenu">
+              <li><a class="dropdown-item" href="#">Alta</a></li>
+              <li><a class="dropdown-item" href="#">Media</a></li>
+              <li><a class="dropdown-item" href="#">Baja</a></li>
+            </ul>
+          </li>
           <li><a class="dropdown-item" href="/tareas/archivadas">Archivadas</a></li>
-          <li><hr class="dropdown-divider"></li>
-          <li><a class="dropdown-item" href="{% url 'MisTareas' %}">Mis Tareas</a></li>
+          {% if user.is_authenticated %}
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="{% url 'MisTareas' %}">Mis Tareas</a></li>
+          {% endif %}
         </ul>
       </div>
     </div>

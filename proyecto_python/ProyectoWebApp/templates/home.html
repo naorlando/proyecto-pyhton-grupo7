@@ -2,16 +2,17 @@
 
 {% block title %} Home {% endblock %}
 
+{% load static %}
 
 {% block content %}
 
-<div class="container border rounded shadow" id="fondo-opaco">
+<div class="container border rounded shadow my-5" id="fondo-opaco">
 
     <div class="row d-flex align-items-center justify-content-center my-5">
         <div class="text-center">
-            <h1 class="display-1 fw-bold">Home</h1>
+            <img src="{% static 'img/logo.png' %}" alt="u-task" width="20%" height="20%">
             <hr>
-            <p class="fs-3">¡Bienvenido!</p>
+            <h2 class="fs-3">¡Bienvenido!</h2>
 
             {% if user.is_authenticated %}
 

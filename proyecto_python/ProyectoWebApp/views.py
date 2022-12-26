@@ -369,7 +369,7 @@ def eliminar_tarea(request, id):
     return redirect('/tareas')
 
 
-def tarea_id(request, id):
+def detalle_tarea(request, id):
     db = Database()
     tarea = db.get_tarea(id)
     # prod = Item.objects.get(idproducto = id)
@@ -394,7 +394,7 @@ def tarea_id(request, id):
         mensaje = 'Hubo un error al intentar abrir la tarea: ' + tarea[1]
         return render(request,'error.html',{'mensaje': mensaje})
 
-    return render(request, 'tareaid.html', data)
+    return render(request, 'detalleTarea.html', data)
 
 
 def exportar_tarea(request, id):
